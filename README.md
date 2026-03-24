@@ -1,5 +1,7 @@
-# Piano Transcription with Neural Semi-CRF
+Forked to try to validate and improve transkun
 
+
+# Piano Transcription with Neural Semi-CRF
 
 This repo contains code for following papers for transcribing expressive piano performance into MIDI.
 
