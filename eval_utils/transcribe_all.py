@@ -34,6 +34,10 @@ def main():
     out_path.mkdir(parents=True, exist_ok=True)
     error_log = out_path / "transcription_errors.log"
 
+    pred_midi_dir = out_path / "predicted_midis"
+    pred_midi_dir.mkdir(parents=True, exist_ok=True)
+
+
     print(f"[INFO] Scanning for .wav files in {maestro_path}...")
     # Recursively find all .wav files in the dataset folders (2004, 2006, etc.)
     wav_files = list(maestro_path.rglob("*.wav"))
@@ -53,7 +57,7 @@ def main():
         base_name = wav_file.stem
         
         # Name the output to perfectly match the requirement in evaluate_metrics.py
-        pred_file = out_path / f"{base_name}_pred.mid"
+        pred_file = pred_midi_dir / f"{base_name}_pred.mid"
 
         # Check if transcription already exists to prevent duplicate work
         if pred_file.exists():

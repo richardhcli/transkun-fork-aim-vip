@@ -1,3 +1,12 @@
+#compute the following summary statistics, finding accuracy, precision, and F1 for each
+# Activation
+# Note Onset			
+# Note Onset+Offset			
+# Note Onset+Offset+ vel.			
+# pedal activation			
+# pedal onset			
+# pedal onset+offset
+
 import os
 import sys
 import glob
@@ -155,7 +164,7 @@ def main():
     args = parser.parse_args()
 
     gt_files = list(Path(args.maestro_dir).rglob("*.mid")) + list(Path(args.maestro_dir).rglob("*.midi"))
-    est_dir = Path(args.est_dir)
+    est_dir = Path(args.est_dir) / "predicted_midis"  # Assuming predictions are in a subfolder named 'predicted_midis'
     
     pairs = []
     for gt in gt_files:
