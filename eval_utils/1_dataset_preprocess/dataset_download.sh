@@ -14,6 +14,11 @@
 TARGET_DIR="$SCRATCH/datasets"
 mkdir -p "$TARGET_DIR"
 
+# WHAT: Recursively adds write permission (+w) ONLY for the file owner (u)
+# WHY: If this script was run previously, the files are locked. We must unlock 
+# them safely to allow overwriting, without opening the files to the entire HPC network.
+chmod -R u+w "$TARGET_DIR"
+
 # ---------------------------------------------------------
 # 0. Conda Environment Setup
 # ---------------------------------------------------------
@@ -74,5 +79,18 @@ SAMPLE_MIDI="${SAMPLE_WAV%.wav}.midi"
 
 cp "$SAMPLE_WAV" "$TEST_DIR/"
 cp "$SAMPLE_MIDI" "$TEST_DIR/"
+
+# ---------------------------------------------------------
+# 6. Lock Down Dataset (Read-Only)
+# ---------------------------------------------------------
+echo "Locking dataset files to read-only..."
+
+# WHAT: Finds all files (-type f) in the target directory and sets them to read-only (444).
+# WHY: Protects the pristine ground truth data from accidental modification or deletion 
+# by faulty Python training scripts later in the pipeline.
+find "$TARGET_DIR/MAESTRO" -type f -exec chmod 444 {} +
+find "$TARGET_DIR/A-MAPS" -type f -exec chmod 444 {} +
+find "$TARGET_DIR/SMD_v2" -type f -exec chmod 444 {} +
+find "$TEST_DIR" -type f -exec chmod 444 {} +
 
 echo "Data acquisition and setup complete."

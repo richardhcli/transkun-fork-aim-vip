@@ -16,13 +16,13 @@ export OUTPUT_DIR
 #     --output_dir "$PREDICTION_OUTPUT_DIR" \
 #     --device cuda
 # 2. Run the multi-GPU batch transcription
-python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/transcribe_all_multiGPU.py \
+python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/2_recreate_metrics/transcribe_all_multiGPU.py \
     --maestro_dir "$MAESTRO_DATASET_PREPROCESSED" \
     --output_dir "$PREDICTION_OUTPUT_DIR"
 
 
 # 3. Run the holistic evaluation (CPU-bound, highly parallel)
-python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/compute_comparison_metrics.py \
+python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/2_recreate_metrics/compute_comparison_metrics.py \
     --maestro_dir "$MAESTRO_DATASET_PREPROCESSED" \
     --est_dir "$PREDICTION_OUTPUT_DIR" \
     --workers $CPU_PER_TASK

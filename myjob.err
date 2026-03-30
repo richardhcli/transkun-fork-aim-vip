@@ -1,6 +1,0 @@
-  0%|          | 0/2 [00:00<?, ?it/s]=== METRIC FAILURE ===
-Error : All interval durations must be strictly positive
-Ref   : /scratch/gilbreth/li5042/datasets/maestro_dataset/2011/MIDI-Unprocessed_11_R1_2011_MID--AUDIO_R1-D4_07_Track07_wav.mid
-Est   : /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/output/predicted_midis/MIDI-Unprocessed_11_R1_2011_MID--AUDIO_R1-D4_07_Track07_wav_pred.mid
-
- 50%|█████     | 1/2 [00:00<00:00,  1.76it/s]100%|██████████| 2/2 [00:23<00:00, 13.71s/it]100%|██████████| 2/2 [00:23<00:00, 11.74s/it]
