@@ -72,6 +72,14 @@ class StateManager:
             if increment_attempt:
                 self.state[fs]["attempts"] += 1
             self._save()
+    
+    def get_summary(self):
+        """Returns a summary of the current state counts."""
+        summary = {"PENDING": 0, "TRANSCRIBING": 0, "SUCCESS": 0, "FAILED": 0}
+        with self.lock:
+            for st in self.state.values():
+                summary[st["status"]] += 1
+        return summary
 
 def transcribe_file(wav_file, pred_file, gpu_queue, state_manager, error_log):
     """Worker function to transcribe a single file."""
@@ -163,7 +171,10 @@ def main():
     print(f"[INFO] State Check: Skipping {skip_count} files (already SUCCESS or max FAILED).")
     
     if not tasks:
-        print("[INFO] All files have been processed. Exiting.")
+        print("[INFO] All files have been processed. ")
+        summary = state_manager.get_summary()
+        print(f"Summary: {summary['SUCCESS']} SUCCESS, {summary['FAILED']} FAILED, {summary['PENDING']} PENDING, {summary['TRANSCRIBING']} TRANSCRIBING")
+        print("Exiting.")
         sys.exit(0)
         
     print(f"[INFO] Starting transcription of {len(tasks)} files across {num_gpus} GPUs...")

@@ -1,0 +1,124 @@
+Setting up Conda environment...
+Channels:
+ - conda-forge
+Platform: linux-64
+Collecting package metadata (repodata.json): ...working... done
+Solving environment: ...working... done
+
+## Package Plan ##
+
+  environment location: /home/li5042/.conda/envs/transkun_data_fetch_env
+
+  added / updated specs:
+    - python=3.10
+
+
+The following NEW packages will be INSTALLED:
+
+  _openmp_mutex      conda-forge/linux-64::_openmp_mutex-4.5-20_gnu 
+  bzip2              conda-forge/linux-64::bzip2-1.0.8-hda65f42_9 
+  ca-certificates    conda-forge/noarch::ca-certificates-2026.2.25-hbd8a1cb_0 
+  icu                conda-forge/linux-64::icu-78.3-h33c6efd_0 
+  ld_impl_linux-64   conda-forge/linux-64::ld_impl_linux-64-2.45.1-default_hbd61a6d_102 
+  libexpat           conda-forge/linux-64::libexpat-2.7.5-hecca717_0 
+  libffi             conda-forge/linux-64::libffi-3.5.2-h3435931_0 
+  libgcc             conda-forge/linux-64::libgcc-15.2.0-he0feb66_18 
+  libgcc-ng          conda-forge/linux-64::libgcc-ng-15.2.0-h69a702a_18 
+  libgomp            conda-forge/linux-64::libgomp-15.2.0-he0feb66_18 
+  liblzma            conda-forge/linux-64::liblzma-5.8.2-hb03c661_0 
+  libnsl             conda-forge/linux-64::libnsl-2.0.1-hb9d3cd8_1 
+  libsqlite          conda-forge/linux-64::libsqlite-3.52.0-hf4e2dac_0 
+  libstdcxx          conda-forge/linux-64::libstdcxx-15.2.0-h934c35e_18 
+  libuuid            conda-forge/linux-64::libuuid-2.41.3-h5347b49_0 
+  libxcrypt          conda-forge/linux-64::libxcrypt-4.4.36-hd590300_1 
+  libzlib            conda-forge/linux-64::libzlib-1.3.2-h25fd6f3_2 
+  ncurses            conda-forge/linux-64::ncurses-6.5-h2d0b736_3 
+  openssl            conda-forge/linux-64::openssl-3.6.1-h35e630c_1 
+  packaging          conda-forge/noarch::packaging-26.0-pyhcf101f3_0 
+  pip                conda-forge/noarch::pip-26.0.1-pyh8b19718_0 
+  python             conda-forge/linux-64::python-3.10.20-h3c07f61_0_cpython 
+  readline           conda-forge/linux-64::readline-8.3-h853b02a_0 
+  setuptools         conda-forge/noarch::setuptools-82.0.1-pyh332efcf_0 
+  tk                 conda-forge/linux-64::tk-8.6.13-noxft_h366c992_103 
+  tzdata             conda-forge/noarch::tzdata-2025c-hc9c84f9_1 
+  wheel              conda-forge/noarch::wheel-0.46.3-pyhd8ed1ab_0 
+  zstd               conda-forge/linux-64::zstd-1.5.7-hb78ec9c_6 
+
+
+
+Downloading and Extracting Packages: ...working... done
+Preparing transaction: - \ done
+Verifying transaction: / - \ | / - \ | / - \ | / - \ | / - \ | / - done
+Executing transaction: | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | done
+#
+# To activate this environment, use
+#
+#     $ conda activate transkun_data_fetch_env
+#
+# To deactivate an active environment, use
+#
+#     $ conda deactivate
+
+Collecting zenodo-get
+  Using cached zenodo_get-3.0.0-py3-none-any.whl.metadata (44 kB)
+Collecting httpx (from zenodo-get)
+  Using cached httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting humanize (from zenodo-get)
+  Using cached humanize-4.15.0-py3-none-any.whl.metadata (7.8 kB)
+Collecting click (from zenodo-get)
+  Using cached click-8.3.1-py3-none-any.whl.metadata (2.6 kB)
+Collecting loguru (from zenodo-get)
+  Using cached loguru-0.7.3-py3-none-any.whl.metadata (22 kB)
+Collecting tqdm (from zenodo-get)
+  Using cached tqdm-4.67.3-py3-none-any.whl.metadata (57 kB)
+Collecting coverage>=7.8.2 (from zenodo-get)
+  Using cached coverage-7.13.5-cp310-cp310-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (8.5 kB)
+Collecting httpx-retries>=0.4.5 (from zenodo-get)
+  Using cached httpx_retries-0.4.6-py3-none-any.whl.metadata (4.6 kB)
+Collecting anyio (from httpx->zenodo-get)
+  Using cached anyio-4.13.0-py3-none-any.whl.metadata (4.5 kB)
+Collecting certifi (from httpx->zenodo-get)
+  Using cached certifi-2026.2.25-py3-none-any.whl.metadata (2.5 kB)
+Collecting httpcore==1.* (from httpx->zenodo-get)
+  Using cached httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Collecting idna (from httpx->zenodo-get)
+  Using cached idna-3.11-py3-none-any.whl.metadata (8.4 kB)
+Collecting h11>=0.16 (from httpcore==1.*->httpx->zenodo-get)
+  Using cached h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting exceptiongroup>=1.0.2 (from anyio->httpx->zenodo-get)
+  Using cached exceptiongroup-1.3.1-py3-none-any.whl.metadata (6.7 kB)
+Collecting typing_extensions>=4.5 (from anyio->httpx->zenodo-get)
+  Using cached typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+Using cached zenodo_get-3.0.0-py3-none-any.whl (25 kB)
+Using cached coverage-7.13.5-cp310-cp310-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (248 kB)
+Using cached httpx_retries-0.4.6-py3-none-any.whl (8.5 kB)
+Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
+Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+Using cached anyio-4.13.0-py3-none-any.whl (114 kB)
+Using cached exceptiongroup-1.3.1-py3-none-any.whl (16 kB)
+Using cached idna-3.11-py3-none-any.whl (71 kB)
+Using cached typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+Using cached certifi-2026.2.25-py3-none-any.whl (153 kB)
+Using cached click-8.3.1-py3-none-any.whl (108 kB)
+Using cached humanize-4.15.0-py3-none-any.whl (132 kB)
+Using cached loguru-0.7.3-py3-none-any.whl (61 kB)
+Using cached tqdm-4.67.3-py3-none-any.whl (78 kB)
+Installing collected packages: typing_extensions, tqdm, loguru, idna, humanize, h11, coverage, click, certifi, httpcore, exceptiongroup, anyio, httpx, httpx-retries, zenodo-get
+
+Successfully installed anyio-4.13.0 certifi-2026.2.25 click-8.3.1 coverage-7.13.5 exceptiongroup-1.3.1 h11-0.16.0 httpcore-1.0.9 httpx-0.28.1 httpx-retries-0.4.6 humanize-4.15.0 idna-3.11 loguru-0.7.3 tqdm-4.67.3 typing_extensions-4.15.0 zenodo-get-3.0.0
+Downloading and streaming extraction for MAESTRO v3...
+Downloading A-MAPS...
+[1mINFO[0m: Output directory: /scratch/gilbreth/li5042/datasets/A-MAPS
+[1mINFO[0m: Title: A-MAPS: Augmented MAPS Dataset with Rhythm and Key Annotations
+[1mINFO[0m: Total size: 2.6 MB
+[1mINFO[0m: Number of files: 1
+[32m[1mSUCCESS[0m: All specified files have been processed.
+Downloading SMD v2...
+[1mINFO[0m: Output directory: /scratch/gilbreth/li5042/datasets/SMD_v2
+[1mINFO[0m: Title: Saarland Music Data: MIDI-Audio Piano Music
+[1mINFO[0m: Total size: 3.2 GB
+[1mINFO[0m: Number of files: 1
+[32m[1mSUCCESS[0m: All specified files have been processed.
+Creating isolated testing folder...
+Data acquisition and setup complete.

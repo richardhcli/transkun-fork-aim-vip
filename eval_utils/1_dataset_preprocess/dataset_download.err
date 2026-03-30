@@ -1,0 +1,12 @@
+
+
+==> WARNING: A newer version of conda exists. <==
+    current version: 25.3.1
+    latest version: 26.1.1
+
+Please update conda by running
+
+    $ conda update -n base -c conda-forge conda
+
+
+Files:   0%|          | 0/1 [00:00<?, ?file/s]Files: 100%|██████████| 1/1 [00:01<00:00,  1.11s/file]                                                      Files:   0%|          | 0/1 [00:00<?, ?file/s]Files: 100%|██████████| 1/1 [01:52<00:00, 112.67s/file]                                                       
