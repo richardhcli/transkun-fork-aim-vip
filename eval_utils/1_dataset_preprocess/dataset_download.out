@@ -48,8 +48,8 @@ The following NEW packages will be INSTALLED:
 
 Downloading and Extracting Packages: ...working... done
 Preparing transaction: - \ done
-Verifying transaction: / - \ | / - \ | / - \ | / - \ | / - \ | / - done
-Executing transaction: | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | done
+Verifying transaction: / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ done
+Executing transaction: / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - done
 #
 # To activate this environment, use
 #
@@ -108,17 +108,6 @@ Installing collected packages: typing_extensions, tqdm, loguru, idna, humanize, 
 
 Successfully installed anyio-4.13.0 certifi-2026.2.25 click-8.3.1 coverage-7.13.5 exceptiongroup-1.3.1 h11-0.16.0 httpcore-1.0.9 httpx-0.28.1 httpx-retries-0.4.6 humanize-4.15.0 idna-3.11 loguru-0.7.3 tqdm-4.67.3 typing_extensions-4.15.0 zenodo-get-3.0.0
 Downloading and streaming extraction for MAESTRO v3...
-Downloading A-MAPS...
-[1mINFO[0m: Output directory: /scratch/gilbreth/li5042/datasets/A-MAPS
-[1mINFO[0m: Title: A-MAPS: Augmented MAPS Dataset with Rhythm and Key Annotations
-[1mINFO[0m: Total size: 2.6 MB
-[1mINFO[0m: Number of files: 1
-[32m[1mSUCCESS[0m: All specified files have been processed.
-Downloading SMD v2...
-[1mINFO[0m: Output directory: /scratch/gilbreth/li5042/datasets/SMD_v2
-[1mINFO[0m: Title: Saarland Music Data: MIDI-Audio Piano Music
-[1mINFO[0m: Total size: 3.2 GB
-[1mINFO[0m: Number of files: 1
-[32m[1mSUCCESS[0m: All specified files have been processed.
-Creating isolated testing folder...
+Performing batch resampling of 2017 and 2018 audio to 44100 Hz...
+Locking dataset files to read-only...
 Data acquisition and setup complete.

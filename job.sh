@@ -18,8 +18,7 @@
 # README: 
 # This is the main job script for running the transcription and evaluation pipeline on the HPC cluster.
 
-CPU_PER_TASK=8
-export CPU_PER_TASK
+
 
 #1) run /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/environment_setup/one_time_init.sh
 

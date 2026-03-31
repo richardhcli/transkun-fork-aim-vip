@@ -2,13 +2,15 @@
 #SBATCH --account yunglu
 #SBATCH --partition=a100-80gb
 #SBATCH --qos=standby
-#SBATCH --ntasks=1 --cpus-per-task=8
+#SBATCH --ntasks=1 --cpus-per-task=16
 #SBATCH --nodes=1 --gpus-per-node=1
 #SBATCH --mem=64G
 #SBATCH --time=02:00:00
 #SBATCH --job-name download_datasets
 #SBATCH --output=/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/1_dataset_preprocess/dataset_download.out
 #SBATCH --error=/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/1_dataset_preprocess/dataset_download.err
+
+#sbatch /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/1_dataset_preprocess/dataset_download.sh
 
 #run once
 TARGET_DIR="$SCRATCH/datasets"
@@ -26,6 +28,10 @@ echo "Setting up Conda environment..."
 
 # Load the Conda module (Name varies by university, e.g., anaconda/2023, miniconda)
 module load conda 
+
+#ffmpeg
+module load cuda/12.6.0
+module load ffmpeg
 
 # Initialize Conda for this non-interactive shell script
 source $(conda info --base)/etc/profile.d/conda.sh
@@ -47,38 +53,46 @@ wget -qO- https://storage.googleapis.com/magentadata/datasets/maestro/v3.0.0/mae
 
 mv "$TARGET_DIR/maestro-v3.0.0" "$TARGET_DIR/MAESTRO"
 
-# ---------------------------------------------------------
-# 2. A-MAPS (Zenodo 2590657)
-# ---------------------------------------------------------
-echo "Downloading A-MAPS..."
-mkdir -p "$TARGET_DIR/A-MAPS"
-zenodo_get 2590657 -o "$TARGET_DIR/A-MAPS"
+echo "Performing batch resampling of 2017 and 2018 audio to 44100 Hz..."
 
-unzip -q -o "$TARGET_DIR/A-MAPS/*.zip" -d "$TARGET_DIR/A-MAPS/" 2>/dev/null || true
-rm -f "$TARGET_DIR/A-MAPS/"*.zip
+# Note: You must add 'module load ffmpeg' at the top of your SLURM script for this to work.
+find "$TARGET_DIR/MAESTRO/2017" "$TARGET_DIR/MAESTRO/2018" -type f -name "*.wav" | xargs -P 16 -I {} sh -c '
+    ffmpeg -y -i "{}" -ar 44100 "{}_tmp.wav" -loglevel error
+    mv "{}_tmp.wav" "{}"
+'
 
-# ---------------------------------------------------------
-# 3. SMD v2 (Zenodo 13753319)
-# ---------------------------------------------------------
-echo "Downloading SMD v2..."
-mkdir -p "$TARGET_DIR/SMD_v2"
-zenodo_get 13753319 -o "$TARGET_DIR/SMD_v2"
+# # ---------------------------------------------------------
+# # 2. A-MAPS (Zenodo 2590657)
+# # ---------------------------------------------------------
+# echo "Downloading A-MAPS..."
+# mkdir -p "$TARGET_DIR/A-MAPS"
+# zenodo_get 2590657 -o "$TARGET_DIR/A-MAPS"
 
-unzip -q -o "$TARGET_DIR/SMD_v2/*.zip" -d "$TARGET_DIR/SMD_v2/" 2>/dev/null || true
-rm -f "$TARGET_DIR/SMD_v2/"*.zip
+# unzip -q -o "$TARGET_DIR/A-MAPS/*.zip" -d "$TARGET_DIR/A-MAPS/" 2>/dev/null || true
+# rm -f "$TARGET_DIR/A-MAPS/"*.zip
 
-# ---------------------------------------------------------
-# 4. Isolate Testing Sample
-# ---------------------------------------------------------
-echo "Creating isolated testing folder..."
-TEST_DIR="$TARGET_DIR/TESTING_SAMPLE"
-mkdir -p "$TEST_DIR"
+# # ---------------------------------------------------------
+# # 3. SMD v2 (Zenodo 13753319)
+# # ---------------------------------------------------------
+# echo "Downloading SMD v2..."
+# mkdir -p "$TARGET_DIR/SMD_v2"
+# zenodo_get 13753319 -o "$TARGET_DIR/SMD_v2"
 
-SAMPLE_WAV=$(find "$TARGET_DIR/MAESTRO" -type f -name "*.wav" | head -n 1)
-SAMPLE_MIDI="${SAMPLE_WAV%.wav}.midi"
+# unzip -q -o "$TARGET_DIR/SMD_v2/*.zip" -d "$TARGET_DIR/SMD_v2/" 2>/dev/null || true
+# rm -f "$TARGET_DIR/SMD_v2/"*.zip
 
-cp "$SAMPLE_WAV" "$TEST_DIR/"
-cp "$SAMPLE_MIDI" "$TEST_DIR/"
+# # ---------------------------------------------------------
+# # 4. Isolate Testing Sample
+# # ---------------------------------------------------------
+# echo "Creating isolated testing folder..."
+# TEST_DIR="$TARGET_DIR/TESTING_SAMPLE"
+# mkdir -p "$TEST_DIR"
+
+# SAMPLE_WAV=$(find "$TARGET_DIR/MAESTRO" -type f -name "*.wav" | head -n 1)
+# SAMPLE_MIDI="${SAMPLE_WAV%.wav}.midi"
+
+# cp "$SAMPLE_WAV" "$TEST_DIR/"
+# cp "$SAMPLE_MIDI" "$TEST_DIR/"
 
 # ---------------------------------------------------------
 # 6. Lock Down Dataset (Read-Only)

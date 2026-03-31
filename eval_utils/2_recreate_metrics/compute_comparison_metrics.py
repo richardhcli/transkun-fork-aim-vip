@@ -278,7 +278,8 @@ def main():
     args = parser.parse_args()
 
     # 2. Path Setup
-    output_dir = os.environ.get("OUTPUT_DIR", "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/output")
+    #output_dir = os.environ.get("OUTPUT_DIR", "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/output")
+    output_dir = args.est_dir  # Use the same directory for outputs and logs to keep things organized
     error_log_path = Path(output_dir) / "metric_failures.log"
     cache_path = Path(output_dir) / "metrics_cache.json"
     est_dir = Path(args.est_dir) / "predicted_midis" 
