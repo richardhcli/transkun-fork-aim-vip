@@ -94,10 +94,14 @@ def main():
 
 if __name__ == "__main__":
     import os
+    print("[single_file_transcription] Starting single file transcription test...")
     dataset = os.path.abspath("/scratch/gilbreth/li5042/datasets/MAESTRO")
     #midi_file = os.path.join(dataset, "2009/MIDI-Unprocessed_11_R1_2009_06-09_ORIG_MID--AUDIO_11_R1_2009_11_R1_2009_07_WAV.midi")
     audio_file = os.path.join(dataset, "2009/MIDI-Unprocessed_11_R1_2009_06-09_ORIG_MID--AUDIO_11_R1_2009_11_R1_2009_07_WAV.wav")
     output_path = "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/2_recreate_metrics/output/test_output_single_file_transcription.mid"
 
-
-    single_file_transcription(audio_file, output_path)
+    print(f"[single_file_transcription] Testing with audio file: {audio_file}\n * Saving to path: {output_path}")
+    try: 
+        single_file_transcription(audio_file, output_path)
+    except Exception as e:
+        print(f"[single_file_transcription] Error during transcription: {e}")
