@@ -18,3 +18,11 @@ store in:
 retrain with all
 
 4) test: re-verify with test dataset. 
+
+
+# Fixes
+
+## Bugs in transkun
+
+train.py: 
+dropout_last -> drop_last

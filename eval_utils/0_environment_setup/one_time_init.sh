@@ -15,6 +15,13 @@ conda env update --prune --prefix=$CONDA_ENV --file=/scratch/gilbreth/li5042/tra
 
 pip install -r requirements.txt
 
+#other shit
+
+#conda install -c conda-forge libstdcxx-ng
+#need to add -y flag to this for auto yes somehow
+#LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
+
+
 # #!/bin/bash
 # # ==============================================================================
 # # Script Name: setup_env.sh
