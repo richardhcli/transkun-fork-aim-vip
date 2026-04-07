@@ -1,14 +1,25 @@
 #!/bin/bash
 #SBATCH --account yunglu
 #SBATCH --partition=a100-80gb
-#SBATCH --qos=standby
+#SBATCH --qos=normal
 #SBATCH --ntasks=1 --cpus-per-task=8
 #SBATCH --nodes=1 --gpus-per-node=1
 #SBATCH --mem=64G
-#SBATCH --time=04:00:00   # 4 hours is plenty for a dry run
+#SBATCH --time=05:00:00   
 #SBATCH --job-name transkun_dryrun
 #SBATCH --output=/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/train_dry.out
 #SBATCH --error=/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/train_dry.err
+
+# 5 hours is plenty for a dry run
+
+#maestro csv 
+# only important fields;
+# "split" (train/validation/test)
+# midi_filename (relative path to dataset dir)
+# audio_filename (relative path to dataset dir)
+# 
+
+
 
 # Ensure your Conda environment is active first!
 source /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/0_environment_setup/setup_environment.sh
@@ -19,7 +30,7 @@ MAESTRO_DIR="$SCRATCH/datasets/MAESTRO"
 SAVE_DIR="/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/transkun_checkpoints"
 mkdir -p "$SAVE_DIR"
 
-echo "Starting Transkun Training Dry-Run..."
+echo "[$(timestamp)] Starting Transkun Training Dry-Run..."
 
 #  The Training Command
 # # (transkun_aim) li5042@gilbreth-fe01:[transkun_fork] $ python -m transkun.train --help
@@ -66,4 +77,4 @@ python -m transkun.train \
     --nIter 500 \
     "$SAVE_DIR/checkpoint_baseline.pt"
 
-echo "Transkun Training Dry-Run Completed!"
+echo "[$(timestamp)] Transkun Training Dry-Run Completed!"

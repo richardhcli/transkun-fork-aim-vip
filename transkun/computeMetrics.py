@@ -5,12 +5,12 @@ import os
 import argparse
 
 import pathlib
-from . import Evaluation
+from transkun import Evaluation
 
 import collections
 
 from multiprocessing import Pool
-from . import Data
+from transkun import Data
 import os
 import warnings
 import glob
@@ -40,10 +40,18 @@ def eval(args):
     metrics = Evaluation.compareTranscription(notesEst, notesGT, splitPedal=True, computeDeviations= computeDeviations, onset_tolerance = onsetTolerance)
 
     # realign
-    onsetDev = [d[1] for d in metrics["deviations"]]
-    offsetDev = [d[2] for d in metrics["deviations"]]
-    meanOnsetDev = sum(onsetDev)/len(onsetDev)
-    meanOffsetDev = sum(offsetDev)/len(offsetDev)
+    # onsetDev = [d[1] for d in metrics["deviations"]]
+    # offsetDev = [d[2] for d in metrics["deviations"]]
+    deviations = metrics.get("deviations", [])
+    if deviations:
+        onsetDev = [d[1] for d in deviations]
+        offsetDev = [d[2] for d in deviations]
+        meanOnsetDev = sum(onsetDev)/len(onsetDev)
+        meanOffsetDev = sum(offsetDev)/len(offsetDev)
+
+    else:
+        onsetDev, offsetDev = [], []
+        medianOnsetDev, maxDevOnset = 0.0, 0.0
 
 
     medianOnsetDev = statistics.median(onsetDev)
@@ -83,6 +91,7 @@ def eval(args):
     
 
 def main():
+    warnings.filterwarnings('ignore', category=FutureWarning, module='scipy')
 
     argParser = argparse.ArgumentParser(description = 
             "compute metrics directly from MIDI files." + os.linesep+\
@@ -146,7 +155,7 @@ def main():
     else:
             metricsAll = list(
                     tqdm.tqdm(
-                    map(eval, [(_, estPath, gtPath, extendPedal, computeDeviations, pedalOffset, alignOnset, dither, extendPedalEs, onsetTolerancet) for _ in filenames]),
+                    map(eval, [(_, estPath, gtPath, extendPedal, computeDeviations, pedalOffset, alignOnset, dither, extendPedalEst, onsetTolerance) for _ in filenames]),
                     total = len(filenames)
                     ))
 
@@ -169,12 +178,24 @@ def main():
         if key == "deviations":
             # perform normality test
             devAll = sum(aggDict[key], [])
-            dev_onset = np.array([_[1] for _ in devAll])
-            dev_offset = np.array([_[2] for _ in devAll])
-            onset_result =  scipy.stats.anderson(dev_onset)
-            offset_result=  scipy.stats.anderson(dev_offset)
-            resultAgg["deviation_onset_normality"]= onset_result.statistic
-            resultAgg["deviation_offset_normality"]= offset_result.statistic
+            # dev_onset = np.array([_[1] for _ in devAll])
+            # dev_offset = np.array([_[2] for _ in devAll])
+            
+            # onset_result =  scipy.stats.anderson(dev_onset)
+            # offset_result=  scipy.stats.anderson(dev_offset)
+            # resultAgg["deviation_onset_normality"]= onset_result.statistic
+            # resultAgg["deviation_offset_normality"]= offset_result.statistic
+
+            if len(devAll) >= 4:
+                dev_onset = np.array([_[1] for _ in devAll])
+                dev_offset = np.array([_[2] for _ in devAll])
+                onset_result = scipy.stats.anderson(dev_onset)
+                offset_result = scipy.stats.anderson(dev_offset)
+                resultAgg["deviation_onset_normality"] = onset_result.statistic
+                resultAgg["deviation_offset_normality"] = offset_result.statistic
+            else:
+                resultAgg["deviation_onset_normality"] = None
+                resultAgg["deviation_offset_normality"] = None
 
         else:
             tmp = np.array(aggDict[key])

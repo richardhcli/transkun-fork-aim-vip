@@ -4,8 +4,9 @@ import sys
 
 #optional: 
 
-MODEL_WEIGHT_PATH = "/scratch/gilbreth/li5042/transkun/transkun_fork/transkun/pretrained/transkunV2/checkpointMSimpler/checkpoint.pt"
-MODEL_CONF_PATH = "/scratch/gilbreth/li5042/transkun/transkun_fork/transkun/pretrained/transkunV2/checkpointMSimpler/model.conf"
+MODEL_WEIGHT_PATH = "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/2_recreate_metrics/V2checkpointMSimpler/checkpoint.pt"
+MODEL_CONF_PATH = "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/2_recreate_metrics/V2checkpointMSimpler/model.conf"
+
 
 def single_file_transcription(wav_file: str, prediction_path: str, device: str = "cuda"):
     """Transcribes a single audio file into MIDI using Transkun."""
