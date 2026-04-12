@@ -28,13 +28,40 @@ DEFAULT_PT_FILE = "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_
 DEFAULT_CONF_FILE = "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/MAESTRO_METADATA/transkun_base.json"
 DEFAULT_MAESTRO_DIR = "/scratch/gilbreth/li5042/datasets/MAESTRO/" # Adjust this if your path differs
 DEFAULT_OUTPUT = "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/validation_test.mid"
-DEFAULT_DEVICE = "gpu" if torch.cuda.is_available() else "cpu"
+DEFAULT_DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+
+
+def resolve_device(device):
+    """Normalize user-facing aliases and enforce CUDA availability."""
+    normalized = str(device).strip().lower()
+    if normalized == "gpu":
+        normalized = "cuda"
+    if normalized.startswith("cuda") and not torch.cuda.is_available():
+        print("[WARN] CUDA requested but not available. Falling back to CPU.")
+        return "cpu"
+    return normalized
+
+
+def load_checkpoint_compat(weight_path, device):
+    """Load checkpoints across PyTorch versions and nonstandard storage tags."""
+    try:
+        return torch.load(weight_path, map_location=device, weights_only=True)
+    except TypeError:
+        # Older PyTorch versions do not support weights_only.
+        return torch.load(weight_path, map_location=device)
+    except Exception as e:
+        msg = str(e)
+        if "tagged with gpu" in msg or "restore data location" in msg:
+            print("[WARN] Retrying checkpoint load by remapping all storages to CPU.")
+            return torch.load(weight_path, map_location=lambda storage, loc: storage)
+        raise
 
 # ==========================================
 # Core Validation Logic
 # ==========================================
 def run_validation(weight_path, conf_path, maestro_dir, output_path, device):
     """Executes the end-to-end validation protocol."""
+    device = resolve_device(device)
     print("\n" + "="*55)
     print("TRANSKUN TRAINING VALIDATION PROTOCOL")
     print("="*55)
@@ -61,7 +88,7 @@ def run_validation(weight_path, conf_path, maestro_dir, output_path, device):
     # 3. Checkpoint Loading & Architecture Mapping
     print(f"\n[INFO] Loading checkpoint: {weight_path}")
     try:
-        checkpoint = torch.load(weight_path, map_location=device, weights_only=True)
+        checkpoint = load_checkpoint_compat(weight_path, device)
         model = TransKun_Class(conf=conf).to(device)
         
         # Exact logic from transkun's transcribe.py

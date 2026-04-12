@@ -2,18 +2,76 @@
 #record of my one-time setup needed for the environment. 
 #only run this script once. 
 
-CONDA_ENV="/scratch/gilbreth/li5042/.conda/envs/transkun_aim"
+ENV_NAME="transkun_aim"
+CONDA_ENV="/scratch/gilbreth/$USER/.conda/envs/$ENV_NAME"
 
+# ASSUMES THIS SCRIPT DIR CONTAINS
+# - setup_environment.sh
+# - environment.yml
+# - requirements.txt
+
+
+#===============================================================================
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
+
+LOG_FILE="$SCRIPT_DIR/environment_setup.log"
+: > "$LOG_FILE"
+
+# Mirror all script output to both terminal and environment_setup.log.
+exec > >(tee -a "$LOG_FILE") 2>&1
+
+echo "Setting up environment at $CONDA_ENV"
+#===============================================================================
+
+#stop upon failure: 
+set -eo pipefail
+
+echo "Loading HPC modules..."
 module load cuda anaconda
 
-conda create -p $CONDA_ENV
+# BEST PRACTICE: Initialize Conda for non-interactive bash scripts.
+# This makes 'conda activate' work inside the script.
+source $(conda info --base)/etc/profile.d/conda.sh
 
+
+#delete previous conda env
+echo "Removing existing conda environment at $CONDA_ENV (if it exists)"
+if conda env list | grep -q "$CONDA_ENV"; then
+    conda env remove -y --prefix "$CONDA_ENV"
+    echo "Existing environment removed."
+else
+    echo "No existing environment found at $CONDA_ENV."
+fi
+#conda env remove -y --prefix $CONDA_ENV
+
+echo "Creating new conda environment at $CONDA_ENV"
+
+conda env create -p "$CONDA_ENV" -f "$SCRIPT_DIR/environment.yml"
+
+echo "Activating environment and installing dependencies ..."
 conda activate $CONDA_ENV
 
-#--prune: When you run a standard conda env update, Conda will only add or update packages. If you deleted a package from your environment.yml file, Conda will leave it installed in your environment. Adding the --prune flag forces Conda to uninstall any packages that are no longer listed in your .yml file, keeping your environment perfectly synced:
-conda env update --prune --prefix=$CONDA_ENV --file=/scratch/gilbreth/li5042/transkun/transkun_fork/environment.yml
+#echo "Updating conda environment with environment.yml..."
+#--prune: When you run a standard conda env update, Conda will only add or update packages. 
+#   If you deleted a package from your environment.yml file, Conda will leave it installed in your environment. Adding the --prune flag forces Conda to uninstall any packages that are no longer listed in your .yml file, keeping your environment perfectly synced:
+#conda env update --prune --prefix=$CONDA_ENV 
 
-pip install -r requirements.txt
+echo "Installing additional dependencies from requirements.txt..."
+# BEST PRACTICE: Usually, it's safer to put pip dependencies directly 
+# inside the environment.yml under a '- pip:' section. But if they 
+# must be separate, running pip install after activation is correct.
+pip install -r $SCRIPT_DIR/requirements.txt
+
+echo "Registering environment as a Jupyter Kernel..."
+# BEST PRACTICE: Explicitly install ipykernel and register the environment 
+# so VS Code / Jupyter can immediately see and use it.
+pip install ipykernel
+python -m ipykernel install --user --name="$ENV_NAME" --display-name "Python ($ENV_NAME)"
+
+echo "==============================================================================="
+echo "Setup complete! Please reload your VS Code window to see the new Jupyter kernel."
+echo "==============================================================================="
 
 #other shit
 

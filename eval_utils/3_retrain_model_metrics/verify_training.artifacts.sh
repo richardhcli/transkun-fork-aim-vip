@@ -9,13 +9,18 @@
 #SBATCH --job-name transkun_dryrun
 #SBATCH --output=/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/verify_training_artifacts.out
 #SBATCH --error=/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/verify_training_artifacts.err
+OUT_FILE="/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/verify_training_artifacts.out"
+ERR_FILE="/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/verify_training_artifacts.err"
 
 
 source /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/0_environment_setup/setup_environment.sh
 
+
 echo "[$(timestamp)] Starting verification of training artifacts..."
 
+python -u /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/sanitycheck.py 1>>"$OUT_FILE" 2>>"$ERR_FILE"
 
-python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/verify_training_artifacts.py
+#-u is unbuffered output, ensuring real-time logging to the specified files.
+python -u /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/verify_training_artifacts.py 1>>"$OUT_FILE" 2>>"$ERR_FILE"
 
 echo "[$(timestamp)] Verification completed."
