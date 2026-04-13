@@ -1,0 +1,6 @@
+split,midi_filename,audio_filename
+train,.transkun_flattened_midis/1/1950_01_full.mid,1/1950_01_full.wav
+train,.transkun_flattened_midis/2/1950_02_full.mid,2/1950_02_full.wav
+train,.transkun_flattened_midis/3/1950_03_full.mid,3/1950_03_full.wav
+train,.transkun_flattened_midis/4/1950_04_full.mid,4/1950_04_full.wav
+train,.transkun_flattened_midis/5/1950_05_full.mid,5/1950_05_full.wav

@@ -1,0 +1,25 @@
+{
+  "combined_csvs": {
+    "entire": "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/5_whole_pipeline/pickle_generation/CSVs/entire.csv",
+    "smoketest": "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/5_whole_pipeline/pickle_generation/CSVs/smoketest.csv",
+    "user_testing": "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/5_whole_pipeline/pickle_generation/CSVs/user_testing.csv"
+  },
+  "csv_path_prefix_semantics": "Paths in CSV files are relative to each dataset root in dataset_roots.",
+  "dataset_csvs": {
+    "A-MAPS": "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/5_whole_pipeline/pickle_generation/CSVs/A-MAPS.csv",
+    "BiMMuDa": "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/5_whole_pipeline/pickle_generation/CSVs/BiMMuDa.csv",
+    "MAESTRO": "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/5_whole_pipeline/pickle_generation/CSVs/MAESTRO.csv",
+    "POP909": "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/5_whole_pipeline/pickle_generation/CSVs/POP909.csv",
+    "SMD_v2": "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/5_whole_pipeline/pickle_generation/CSVs/SMD_v2.csv",
+    "msmd_data": "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/5_whole_pipeline/pickle_generation/CSVs/msmd_data.csv"
+  },
+  "dataset_roots": {
+    "A-MAPS": "/scratch/gilbreth/li5042/datasets/A-MAPS",
+    "BiMMuDa": "/scratch/gilbreth/li5042/datasets/BiMMuDa",
+    "MAESTRO": "/scratch/gilbreth/li5042/datasets/MAESTRO",
+    "POP909": "/scratch/gilbreth/li5042/datasets/POP909",
+    "SMD_v2": "/scratch/gilbreth/li5042/datasets/SMD_v2",
+    "msmd_data": "/scratch/gilbreth/li5042/datasets/msmd_data"
+  },
+  "datasets_root": "/scratch/gilbreth/li5042/datasets"
+}
