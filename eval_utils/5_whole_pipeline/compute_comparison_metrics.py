@@ -118,10 +118,26 @@ def evaluate_pair(args):
 
         # 4. Activation (Frame-Level Pitch)
         fs = 100 # 10ms resolution
-        ref_pr = (ref_pm.get_piano_roll(fs=fs) > 0)
-        est_pr = (est_pm.get_piano_roll(fs=fs) > 0)
         
-        max_len = max(ref_pr.shape[1], est_pr.shape[1])
+        def create_pr_from_intervals(intervals, pitches):
+            if len(intervals) == 0:
+                return np.zeros((128, 1), dtype=bool)
+            end_time = max(intervals[:, 1])
+            max_frames = int(end_time * fs) + 1
+            pr = np.zeros((128, max_frames), dtype=bool)
+            for (start, end), pitch in zip(intervals, pitches):
+                midi_pitch = int(round(mir_eval.util.hz_to_midi(pitch)))
+                if 0 <= midi_pitch < 128:
+                    pr[midi_pitch, int(start * fs):int(end * fs)] = True
+            return pr
+            
+        ref_pr = create_pr_from_intervals(ref_inv, ref_p)
+        est_pr = create_pr_from_intervals(est_inv, est_p)
+        
+        max_len = max(ref_pr.shape[1], est_pr.shape[1], 
+            int(max(ref_pedal_inv[:, 1] * fs)) + 1 if len(ref_pedal_inv) > 0 else 0,
+            int(max(est_pedal_inv[:, 1] * fs)) + 1 if len(est_pedal_inv) > 0 else 0)
+            
         ref_pr = np.pad(ref_pr, ((0, 0), (0, max_len - ref_pr.shape[1])))
         est_pr = np.pad(est_pr, ((0, 0), (0, max_len - est_pr.shape[1])))
         results['Activation'] = calc_frame_metrics(ref_pr.flatten(), est_pr.flatten())
