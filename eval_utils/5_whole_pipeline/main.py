@@ -303,6 +303,7 @@ def run_case(
                 str(eval_output_dir),
                 "--workers",
                 str(metrics_workers),
+                "--align_onset",
             ]
             log("[main.py] Launching full-mode MAESTRO test metrics evaluation")
             run_command(metrics_cmd, dry_run=dry_run)

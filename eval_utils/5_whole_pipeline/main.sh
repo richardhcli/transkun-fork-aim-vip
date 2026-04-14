@@ -5,7 +5,7 @@
 #SBATCH --ntasks=1 --cpus-per-task=32
 #SBATCH --nodes=1 --gpus-per-node=1
 #SBATCH --mem=64G
-#SBATCH --time=8:00:00
+#SBATCH --time=2-00:00:00
 #SBATCH --job-name transkun_finetune_verify
 #SBATCH --output=/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/5_whole_pipeline/output/main.sh.out
 #SBATCH --error=/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/5_whole_pipeline/output/main.sh.err
@@ -21,7 +21,7 @@ export WORKING_DIR
 
 CHECKPOINT_DIR="$MAIN_SCRIPT_DIR/model_files_preparation/transkunV2/checkpointMSimpler"
 export CHECKPOINT_DIR
-HOURS_IN_TRAINING="${HOURS_IN_TRAINING:-7}"
+HOURS_IN_TRAINING="45"
 export HOURS_IN_TRAINING
 #====================================================================================================================================
 RUNNING_SCRIPT="$MAIN_SCRIPT_DIR/$MAIN_SCRIPT_NAME"

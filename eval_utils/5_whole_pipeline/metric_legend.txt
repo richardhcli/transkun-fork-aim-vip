@@ -1,7 +1,7 @@
-Activation                 | P: 0.9548 | R: 0.9356 | F1: 0.9446
-Note Onset                 | P: 0.9878 | R: 0.9704 | F1: 0.9789
-Note Onset+Offset          | P: 0.9272 | R: 0.9111 | F1: 0.9190
-Note Onset+Offset+Velocity | P: 0.9184 | R: 0.9026 | F1: 0.9103
+Activation                 | P: 0.9548 | R: 0.9357 | F1: 0.9447
+Note Onset                 | P: 0.9878 | R: 0.9705 | F1: 0.9790
+Note Onset+Offset          | P: 0.9273 | R: 0.9112 | F1: 0.9191
+Note Onset+Offset+Velocity | P: 0.9185 | R: 0.9026 | F1: 0.9104
 Pedal Activation           | P: 0.9480 | R: 0.9308 | F1: 0.9378
-Pedal Onset                | P: 0.8437 | R: 0.8127 | F1: 0.8265
+Pedal Onset                | P: 0.8438 | R: 0.8128 | F1: 0.8267
 Pedal Onset+Offset         | P: 0.8138 | R: 0.7837 | F1: 0.7973

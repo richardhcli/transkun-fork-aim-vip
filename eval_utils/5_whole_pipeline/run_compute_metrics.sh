@@ -30,7 +30,8 @@ python "$MAIN_SCRIPT_DIR/compute_comparison_metrics.py" \
   --maestro_dir "$MAESTRO_DIR" \
   --est_dir "$EST_DIR" \
   --workers 32 \
-  --split "test"
+  --split "test" \
+  --align_onset
 
 EXIT_CODE=$?
 

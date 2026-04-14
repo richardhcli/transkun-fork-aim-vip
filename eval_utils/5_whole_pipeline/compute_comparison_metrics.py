@@ -82,7 +82,7 @@ def calc_frame_metrics(ref_bin, est_bin):
 # 2. Core Evaluation Logic
 # ==========================================
 def evaluate_pair(args):
-    ref_path, est_path = args
+    ref_path, est_path, align_onset = args
     base_name = Path(ref_path).stem
 
     try:
@@ -97,6 +97,22 @@ def evaluate_pair(args):
         # But prediction notes are NOT pedal extended unless `--applyPedalExtensionOnEstimated` is passed (default False).
         ref_inv, ref_p, ref_v, ref_pedal_inv, ref_pedal_p = extract_notes_and_pedal(ref_path, extend_sustain=True)
         est_inv, est_p, est_v, est_pedal_inv, est_pedal_p = extract_notes_and_pedal(est_path, extend_sustain=False)
+
+        if align_onset and len(ref_inv) > 0 and len(est_inv) > 0:
+            matching = mir_eval.transcription.match_notes(ref_inv, ref_p, est_inv, est_p, onset_tolerance=0.05)
+            if len(matching) > 0:
+                matched_ref, matched_est = zip(*matching)
+                onsetDev = ref_inv[list(matched_ref), 0] - est_inv[list(matched_est), 0]
+                medianOnsetDev = np.median(onsetDev)
+                maxDevOnset = max(np.max(onsetDev), -np.min(onsetDev))
+                
+                # align GT (ref)
+                ref_inv += (maxDevOnset - medianOnsetDev)
+                if len(ref_pedal_inv) > 0: ref_pedal_inv += (maxDevOnset - medianOnsetDev)
+                
+                # align Est
+                est_inv += maxDevOnset
+                if len(est_pedal_inv) > 0: est_pedal_inv += maxDevOnset
 
         # 1. Note Onset
         p, r, f, _ = mir_eval.transcription.precision_recall_f1_overlap(
@@ -199,7 +215,7 @@ def load_cache(cache_path):
             return {}
     return {}
 
-def build_task_queue(maestro_dir, est_dir, master_cache, split="all", maestro_csv=None):
+def build_task_queue(maestro_dir, est_dir, master_cache, split="all", maestro_csv=None, align_onset=False):
     """Matches ground truth files to predictions and filters out cached files."""
     maestro_dir = Path(maestro_dir)
 
@@ -233,7 +249,7 @@ def build_task_queue(maestro_dir, est_dir, master_cache, split="all", maestro_cs
         if est_file.exists():
             total_pairs_found += 1
             if base_name not in master_cache:
-                pending_pairs.append((gt, est_file))
+                pending_pairs.append((gt, est_file, align_onset))
                 
     return pending_pairs, total_pairs_found
 
@@ -310,6 +326,7 @@ def main():
     parser.add_argument("--workers", type=int, default=16, help="Number of CPU cores")
     parser.add_argument("--split", choices=["all", "train", "validation", "test"], default="test")
     parser.add_argument("--maestro-csv", default=None, help="Optional path to MAESTRO metadata CSV")
+    parser.add_argument("--align_onset", action='store_true', help="Apply median onset deviation alignment before scoring")
     args = parser.parse_args()
 
     # 2. Path Setup
@@ -332,6 +349,7 @@ def main():
         master_cache,
         split=args.split,
         maestro_csv=args.maestro_csv,
+        align_onset=args.align_onset,
     )
 
     print(f"[INFO] Dataset total: {total_pairs_found} files.")
