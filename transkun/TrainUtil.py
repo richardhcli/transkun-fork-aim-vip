@@ -5,6 +5,7 @@ import torch_optimizer as optim
 import torch.nn as nn
 import numpy as np
 import copy
+import warnings
 from .LayersTransformer import LearnableSpatialPositionEmbedding
 
 
@@ -214,7 +215,11 @@ def computeMetrics(model, x, notes):
         logp = model.log_prob(x, notes)
         logp= (logp.sum(-1).mean()).item()
 
-        stats = model.computeStatsMIREVAL(x, notes)
+        # Empty estimate/reference notes can happen early in training and are expected.
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", message=r"Estimated notes are empty\\.")
+            warnings.filterwarnings("ignore", message=r"Reference notes are empty\\.")
+            stats = model.computeStatsMIREVAL(x, notes)
 
     
     length = x.shape[1]
@@ -263,10 +268,10 @@ def doValidation(model, dataset, parallel, device):
         nCorrect= float(result[4])
 
      
-    meanNLLPerSecond = -logPAgg/lengthAgg
-    precision = nCorrect/nEst
-    recall = nCorrect/nGT
-    f1 = 2* precision*recall/(precision+recall)              
+    meanNLLPerSecond = (-logPAgg/lengthAgg) if lengthAgg > 0 else 0.0
+    precision = (nCorrect/nEst) if nEst > 0 else 0.0
+    recall = (nCorrect/nGT) if nGT > 0 else 0.0
+    f1 = (2 * precision * recall / (precision + recall)) if (precision + recall) > 0 else 0.0
 
 
     return {"meanNLL": meanNLLPerSecond, "precision": precision, "recall":recall, "f1": f1}

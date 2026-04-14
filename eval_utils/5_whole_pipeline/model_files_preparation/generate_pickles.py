@@ -264,6 +264,25 @@ def main() -> int:
         write_split_csv(train_csv, train_rows)
         write_split_csv(val_csv, val_rows)
         write_split_csv(test_csv, test_rows)
+        
+        import pretty_midi
+
+        def check_midi_in_rows(rows: List[Dict[str, str]], root: Path, split_name: str) -> None:
+            for row in rows:
+                orig_midi_path = root / row["midi_filename"]
+                if not orig_midi_path.exists():
+                    continue
+                try:
+                    pm = pretty_midi.PrettyMIDI(str(orig_midi_path))
+                    if len(pm.instruments) > 1:
+                        log(f"WARNING: Multi-track MIDI detected during dataloader generation (should have been pre-flattened)! File: {orig_midi_path}")
+                except Exception as e:
+                    log(f"WARNING: Failed to parse {orig_midi_path}: {e}")
+
+        log("Verifying MIDI files are flattened...")
+        check_midi_in_rows(train_rows, dataset_root, "train")
+        check_midi_in_rows(val_rows, dataset_root, "val")
+        check_midi_in_rows(test_rows, dataset_root, "test")
 
         train_samples = create_samples_for_split(Data, dataset_root, train_csv, extend_pedal)
         val_samples = create_samples_for_split(Data, dataset_root, val_csv, extend_pedal)

@@ -10,7 +10,7 @@ import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from time import time
+import time
 
 def env_path(
     name: str,
@@ -54,6 +54,11 @@ MODEL_PREP_DIR = env_path(
     must_exist=True,
     expect_dir=True,
 )
+CHECKPOINT_DIR = env_path(
+    "CHECKPOINT_DIR",
+    default=MODEL_PREP_DIR / "transkunV2" / "checkpointMSimpler",
+    must_exist=False,
+)
 CSV_DIR = env_path(
     "CSV_DIR",
     default=WHOLE_PIPELINE_DIR / "csv_generation" / "CSVs",
@@ -77,6 +82,25 @@ TRAIN_SCRIPT = env_path(
     must_exist=True,
     expect_dir=False,
 )
+PREPARE_TRAIN_CHECKPOINT_SCRIPT = env_path(
+    "PREPARE_TRAIN_CHECKPOINT_SCRIPT",
+    default=MODEL_PREP_DIR / "prepare_train_checkpoint.py",
+    must_exist=True,
+    expect_dir=False,
+)
+TRANSCRIBE_SCRIPT = env_path(
+    "TRANSCRIBE_SCRIPT",
+    default=WHOLE_PIPELINE_DIR / "transcribe_maestro_test.py",
+    must_exist=True,
+    expect_dir=False,
+)
+METRICS_SCRIPT = env_path(
+    "METRICS_SCRIPT",
+    default=WHOLE_PIPELINE_DIR / "compute_comparison_metrics.py",
+    must_exist=True,
+    expect_dir=False,
+)
+
 DEFAULT_DATASET_ROOT = env_path(
     "DATASET_ROOT",
     default="/scratch/gilbreth/li5042/datasets",
@@ -95,7 +119,6 @@ class CaseConfig:
 
 def log(message: str) -> None:
     print(message, flush=True)
-    print(message, file=sys.stderr, flush=True)
 
 
 def run_command(cmd: list[str], dry_run: bool) -> None:
@@ -107,18 +130,60 @@ def run_command(cmd: list[str], dry_run: bool) -> None:
     child_env["WORKING_DIR"] = str(WORKING_DIR)
     child_env["WHOLE_PIPELINE_DIR"] = str(WHOLE_PIPELINE_DIR)
     child_env["MODEL_PREP_DIR"] = str(MODEL_PREP_DIR)
+    child_env["CHECKPOINT_DIR"] = str(CHECKPOINT_DIR)
     child_env["CSV_DIR"] = str(CSV_DIR)
     child_env["OUTPUT_DIR"] = str(OUTPUT_DIR)
     child_env["GENERATE_PICKLES_SCRIPT"] = str(GENERATE_PICKLES_SCRIPT)
     child_env["TRAIN_SCRIPT"] = str(TRAIN_SCRIPT)
+    child_env["PREPARE_TRAIN_CHECKPOINT_SCRIPT"] = str(PREPARE_TRAIN_CHECKPOINT_SCRIPT)
+    child_env["TRANSCRIBE_SCRIPT"] = str(TRANSCRIBE_SCRIPT)
+    child_env["METRICS_SCRIPT"] = str(METRICS_SCRIPT)
     child_env["DATASET_ROOT"] = str(DEFAULT_DATASET_ROOT)
     subprocess.run(cmd, check=True, cwd=str(WORKING_DIR), env=child_env)
 
 
 def ensure_scripts_exist() -> None:
-    for path in (GENERATE_PICKLES_SCRIPT, TRAIN_SCRIPT):
+    for path in (
+        GENERATE_PICKLES_SCRIPT,
+        TRAIN_SCRIPT,
+        PREPARE_TRAIN_CHECKPOINT_SCRIPT,
+        TRANSCRIBE_SCRIPT,
+        METRICS_SCRIPT,
+    ):
         if not path.exists():
             raise FileNotFoundError(f"Required script not found: {path}")
+
+
+def ensure_training_checkpoint(case: CaseConfig, dry_run: bool) -> None:
+    checkpoint_out = case.checkpoint_out.resolve()
+    output_model_conf = checkpoint_out.parent / "model.conf"
+
+    if checkpoint_out.exists() and output_model_conf.exists():
+        log(f"[main.py] Reusing prepared training checkpoint: {checkpoint_out}")
+        return
+
+    source_checkpoint = (CHECKPOINT_DIR / "checkpoint.pt").resolve()
+    source_model_conf = (CHECKPOINT_DIR / "model.conf").resolve()
+    if not source_checkpoint.exists():
+        raise FileNotFoundError(f"Source inference checkpoint missing: {source_checkpoint}")
+    if not source_model_conf.exists():
+        raise FileNotFoundError(f"Source model conf missing: {source_model_conf}")
+
+    prepare_cmd = [
+        sys.executable,
+        str(PREPARE_TRAIN_CHECKPOINT_SCRIPT),
+        "--source-checkpoint",
+        str(source_checkpoint),
+        "--source-model-conf",
+        str(source_model_conf),
+        "--output-checkpoint",
+        str(checkpoint_out),
+        "--n-iter",
+        str(case.n_iter),
+    ]
+
+    log(f"[main.py] Preparing training checkpoint for case: {case.name}")
+    run_command(prepare_cmd, dry_run=dry_run)
 
 
 def build_case_configs(smoke_iter: int, user_iter: int, full_iter: int) -> dict[str, CaseConfig]:
@@ -154,8 +219,20 @@ def run_case(
     generate_only: bool,
     train_only: bool,
     train_dry_run: bool,
+    full_max_seconds: float,
+    run_full_eval: bool,
+    metrics_workers: int,
 ) -> None:
     log(f"[main.py] Starting case: {case.name}")
+    log(
+        "[main.py] Case config: "
+        f"csv={case.csv_path} "
+        f"pickle_dir={case.pickle_dir} "
+        f"checkpoint_out={case.checkpoint_out} "
+        f"n_iter={case.n_iter}"
+    )
+    log(f"[main.py] Dataset root: {dataset_root}")
+    log(f"[main.py] Checkpoint source dir: {CHECKPOINT_DIR}")
 
     if not train_only:
         if not case.csv_path.exists():
@@ -175,6 +252,8 @@ def run_case(
         run_command(generate_cmd, dry_run=dry_run)
 
     if not generate_only:
+        ensure_training_checkpoint(case, dry_run=dry_run)
+
         train_cmd = [
             sys.executable,
             str(TRAIN_SCRIPT),
@@ -183,17 +262,50 @@ def run_case(
             "--pickle-dir",
             str(case.pickle_dir),
             "--model-conf-dir",
-            str(case.pickle_dir),
+            str(case.checkpoint_out.parent.resolve()),
             "--checkpoint-out",
             str(case.checkpoint_out),
             "--n-iter",
             str(case.n_iter),
         ]
+
+        if case.name == "full" and full_max_seconds > 0:
+            train_cmd.extend(["--max-train-seconds", str(full_max_seconds)])
+
         if train_dry_run:
             train_cmd.append("--dry-run")
 
         log(f"[main.py] Launching train.py for case: {case.name}")
         run_command(train_cmd, dry_run=dry_run)
+
+        if case.name == "full" and run_full_eval and not train_dry_run:
+            eval_output_dir = OUTPUT_DIR / "metrics" / f"full_eval_{int(time.time())}"
+            
+            transcribe_cmd = [
+                sys.executable,
+                str(TRANSCRIBE_SCRIPT),
+                "--maestro_dir",
+                str((dataset_root / "MAESTRO").resolve()),
+                "--output_dir",
+                str(eval_output_dir),
+                "--checkpoint_pt",
+                str(case.checkpoint_out),
+            ]
+            log("[main.py] Launching full-mode MAESTRO test transcription")
+            run_command(transcribe_cmd, dry_run=dry_run)
+            
+            metrics_cmd = [
+                sys.executable,
+                str(METRICS_SCRIPT),
+                "--maestro_dir",
+                str((dataset_root / "MAESTRO").resolve()),
+                "--est_dir",
+                str(eval_output_dir),
+                "--workers",
+                str(metrics_workers),
+            ]
+            log("[main.py] Launching full-mode MAESTRO test metrics evaluation")
+            run_command(metrics_cmd, dry_run=dry_run)
 
     log(f"[main.py] Completed case: {case.name}")
 
@@ -212,6 +324,9 @@ def main() -> int:
     parser.add_argument("--smoke-n-iter", type=int, default=300)
     parser.add_argument("--user-n-iter", type=int, default=3000)
     parser.add_argument("--full-n-iter", type=int, default=180000)
+    parser.add_argument("--full-max-hours", type=float, default=8.0, help="Wall-clock cap for full mode")
+    parser.add_argument("--metrics-workers", type=int, default=16, help="CPU workers for metric aggregation")
+    parser.add_argument("--skip-full-eval", action="store_true", help="Skip automatic MAESTRO test evaluation after full training")
     parser.add_argument("--generate-only", action="store_true")
     parser.add_argument("--train-only", action="store_true")
     parser.add_argument("--train-dry-run", action="store_true", help="Pass --dry-run to train.py")
@@ -229,6 +344,15 @@ def main() -> int:
         raise ValueError("--generate-only and --train-only cannot be used together")
 
     ensure_scripts_exist()
+
+    log(f"[main.py] WORKING_DIR={WORKING_DIR}")
+    log(f"[main.py] WHOLE_PIPELINE_DIR={WHOLE_PIPELINE_DIR}")
+    log(f"[main.py] MODEL_PREP_DIR={MODEL_PREP_DIR}")
+    log(f"[main.py] CSV_DIR={CSV_DIR}")
+    log(f"[main.py] OUTPUT_DIR={OUTPUT_DIR}")
+    log(f"[main.py] PREPARE_TRAIN_CHECKPOINT_SCRIPT={PREPARE_TRAIN_CHECKPOINT_SCRIPT}")
+    log(f"[main.py] TRANSCRIBE_SCRIPT={TRANSCRIBE_SCRIPT}")
+    log(f"[main.py] METRICS_SCRIPT={METRICS_SCRIPT}")
 
     #configs
     cases = build_case_configs(
@@ -251,11 +375,17 @@ def main() -> int:
             generate_only=args.generate_only,
             train_only=args.train_only,
             train_dry_run=args.train_dry_run,
+            full_max_seconds=max(0.0, args.full_max_hours * 3600.0),
+            run_full_eval=not args.skip_full_eval,
+            metrics_workers=args.metrics_workers,
         )
         mode_time_end = time.time()
         log(f"[main.py] Completed case: {name} in {mode_time_end - mode_time_start} seconds")
 
     final_time_end = time.time()
+
+    #metrics: 
+
     log(f"[main.py] Finished execution in {final_time_end - time_start} seconds")
 
     return 0

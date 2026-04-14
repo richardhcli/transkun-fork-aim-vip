@@ -9,7 +9,7 @@ end_time=$(date +%s)
 
 overall_runtime_seconds=$((end_time - START_TIME))
 overall_runtime_minutes=$((overall_runtime_seconds / 60))
-overall_runtime_formatted=$(printf "%02dh:%02dh:%02ds" $((overall_runtime_seconds / 3600)) $(( (overall_runtime_seconds % 3600) / 60)) $((overall_runtime_seconds % 60)))
+overall_runtime_formatted=$(printf "%02dh:%02dm:%02ds" $((overall_runtime_seconds / 3600)) $(( (overall_runtime_seconds % 3600) / 60)) $((overall_runtime_seconds % 60)))
 
 #ending message:
 MESSAGE="$RUNNING_SCRIPT completed at $(timestamp) in ${overall_runtime_formatted} seconds"
