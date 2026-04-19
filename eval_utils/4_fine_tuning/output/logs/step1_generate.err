@@ -1,0 +1,39 @@
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/prepare_transkun_pickles.py --dataset-root /scratch/gilbreth/li5042/datasets --csv-dir /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs --output-dir /tmp/finetune_pickles_raw_r6b0fy60/raw --workers 24 --rows-per-chunk 512
+Generating per-dataset CSV files...
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/preprocess_dataset_A-MAPS.py --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/A-MAPS.csv --dataset-root /scratch/gilbreth/li5042/datasets/A-MAPS
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/preprocess_dataset_MAESTRO.py --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/MAESTRO.csv --maestro-csv /scratch/gilbreth/li5042/datasets/MAESTRO/maestro-v3.0.0.csv
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/preprocess_dataset_SMD_v2.py --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/SMD_v2.csv --dataset-root /scratch/gilbreth/li5042/datasets/SMD_v2
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/preprocess_dataset_msmd_data.py --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/msmd_data.csv --dataset-root /scratch/gilbreth/li5042/datasets/msmd_data
+/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/site-packages/pretty_midi/pretty_midi.py:122: RuntimeWarning: Tempo, Key or Time signature change events found on non-zero tracks.  This is not a valid type 0 or type 1 MIDI file.  Tempo, Key or Time Signature may be wrong.
+  warnings.warn(
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/preprocess_dataset_BiMMuDa.py --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/BiMMuDa.csv --dataset-root /scratch/gilbreth/li5042/datasets/BiMMuDa
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/preprocess_dataset_POP909.py --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/POP909.csv --dataset-root /scratch/gilbreth/li5042/datasets/POP909
+Merging per-dataset CSV files into merged_train.csv...
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/merge_dataset_csvs.py --csv-dir /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/merged_train.csv
+Filtering CSV rows to WAV files at 44.1kHz...
+Train CSV filter stats: input=1387 kept=1387 non_wav=0 missing=0 wrong_rate=0
+MAESTRO CSV filter stats: input=1276 kept=1276 non_wav=0 missing=0 wrong_rate=0
+Loading filtered CSV metadata with Data.createDatasetMaestroCSV...
+Parsing train metadata in parallel: rows=1387 chunks=3 workers=3
+[train] chunk 1/3 done: input_rows=512 output_samples=512
+[train] chunk 3/3 done: input_rows=363 output_samples=363
+[train] chunk 2/3 done: input_rows=512 output_samples=512
+Completed parallel parse for train: samples=1387
+Parsing maestro metadata in parallel: rows=1276 chunks=3 workers=3
+[maestro] chunk 3/3 done: input_rows=252 output_samples=252
+[maestro] chunk 1/3 done: input_rows=512 output_samples=512
+[maestro] chunk 2/3 done: input_rows=512 output_samples=512
+Completed parallel parse for maestro: samples=1276
+Wrote maestro-like JSON -> /tmp/finetune_pickles_raw_r6b0fy60/raw/augmented_maestro_like.json
+Re-loading maestro-like JSON with Data.createDatasetMaestro...
+Wrote 2349 samples -> /tmp/finetune_pickles_raw_r6b0fy60/raw/train.pickle
+Wrote 137 samples -> /tmp/finetune_pickles_raw_r6b0fy60/raw/val.pickle
+Wrote 177 samples -> /tmp/finetune_pickles_raw_r6b0fy60/raw/test.pickle
+Wrote model conf -> /tmp/finetune_pickles_raw_r6b0fy60/raw/transkun_base.json
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/preprocessing.py --input-dir /tmp/finetune_pickles_raw_r6b0fy60/raw --output-dir /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/model_info/training_data --dataset-root /scratch/gilbreth/li5042/datasets --fail-on-missing
+Copied baseline model conf: /tmp/finetune_pickles_raw_r6b0fy60/raw/transkun_base.json -> /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/model_info/training_data/transkun_base.json
+Generated train.pickle samples=2349
+Generated val.pickle samples=137
+Generated test.pickle samples=177
+Metadata generated in: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/model_info/training_data
+Model params prepared in: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/model_info/model_params

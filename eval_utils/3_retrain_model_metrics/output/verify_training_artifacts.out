@@ -1,0 +1,16 @@
+[2026-04-07 19:37:18] Starting verification of training artifacts...
+[/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/verify_training_artifacts.py:2026-04-07 19:41:41] Starting Transkun Training Artifact Validation Script...
+[INFO] IS_MANUAL_CALL is True. Running with hardcoded defaults.
+
+=======================================================
+TRANSKUN TRAINING VALIDATION PROTOCOL
+=======================================================
+[INFO] Scanning /scratch/gilbreth/li5042/datasets/MAESTRO/ for a test .wav file...
+[SUCCESS] Found test audio: MIDI-UNPROCESSED_19-20-21_R2_2014_MID--AUDIO_19_R2_2014_wav.wav
+
+[INFO] Parsing config: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/MAESTRO_METADATA/transkun_base.json
+[SUCCESS] Config parsed via moduleconf.
+
+[INFO] Loading checkpoint: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/transkun_checkpoints/checkpoint_baseline.pt
+[ERROR] Model instantiation or weight mapping failed: don't know how to restore data location of torch.storage.UntypedStorage (tagged with gpu)
+[2026-04-07 19:43:29] Verification completed.

@@ -1,0 +1,14 @@
+[prologue.sh] Starting /main.sh at 2026-04-13 16:14:19 at START_TIME 1776111259
+Starting one-time dataset MIDI flattening...
+Granting read and write permissions to datasets directory...
+Reverting permissions on datasets directory (removing write access)...
+Flattening process finished with code 0
+Running quick summary over the JSON log outputs...
+=== Flatten Summary ===
+Total checked: 3347
+Modified: 0
+Skipped (already single-track): 3347
+Errors: 0
+
+Testing validation complete.
+[epilogue] /main.sh completed at 2026-04-13 04:24:27 PM in 00h:10m:08s seconds

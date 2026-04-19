@@ -1,0 +1,25 @@
+#0 loaded
+loading dataset....
+loading the annotation file...
+n: 2349  totalDuration:  1241806.124399093  elapsed: 16.11567521095276
+creating index for notes in all pieces...
+elapsed: 3.910081148147583
+loading the annotation file...
+n: 137  totalDuration:  70190.26616780045  elapsed: 0.7443258762359619
+creating index for notes in all pieces...
+elapsed: 0.2323014736175537
+#0 loaded
+[fine_tune] Split sizes: train=2349 val=137 test=177
+[fine_tune] Project root: /scratch/gilbreth/li5042/transkun/transkun_fork
+[fine_tune] Model info dir: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/model_info
+[fine_tune] Run dir: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/output/finetune_v2_run
+[fine_tune] Dataset root: /scratch/gilbreth/li5042/datasets
+[fine_tune] Device: cuda
+[fine_tune] Seeding fine-tuning checkpoint with pretrained weights and a fresh optimizer/LR schedule.
+[fine_tune] Seeded checkpoint: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/output/finetune_v2_run/checkpoint_finetuned.pt
+[fine_tune] Run config: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/output/finetune_v2_run/model_finetune.conf
+[fine_tune] Missing keys: 0
+[fine_tune] Unexpected keys: 0
+[fine_tune] Launching fine-tuning via transkun.train...
+[fine_tune] Command:
+/scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python -m transkun.train --nProcess 1 --datasetPath /scratch/gilbreth/li5042/datasets --datasetMetaFile_train /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/model_info/training_data/train.pickle --datasetMetaFile_val /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/model_info/training_data/val.pickle --batchSize 4 --dataLoaderWorkers 8 --max_lr 0.0001 --weight_decay 0.0001 --nIter 50000 --modelConf /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/output/finetune_v2_run/model_finetune.conf /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/output/finetune_v2_run/checkpoint_finetuned.pt

@@ -1,0 +1,46 @@
+Generating per-dataset CSV files...
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/preprocess_dataset_A-MAPS.py --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/A-MAPS.csv --dataset-root /scratch/gilbreth/li5042/datasets/A-MAPS
+[A-MAPS] Wrote 0 rows -> /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/A-MAPS.csv
+[A-MAPS] MIDI files: 269, audio files: 0, paired: 0
+[A-MAPS] Missing audio stems for MIDI: 269, ambiguous stems: 0
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/preprocess_dataset_MAESTRO.py --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/MAESTRO.csv --maestro-csv /scratch/gilbreth/li5042/datasets/MAESTRO/maestro-v3.0.0.csv
+[MAESTRO] Wrote 1276 rows -> /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/MAESTRO.csv
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/preprocess_dataset_SMD_v2.py --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/SMD_v2.csv --dataset-root /scratch/gilbreth/li5042/datasets/SMD_v2
+[SMD_v2] Wrote 50 rows -> /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/SMD_v2.csv
+[SMD_v2] MIDI files: 50, audio files: 50, paired: 50
+[SMD_v2] Missing audio stems for MIDI: 0, ambiguous stems: 0
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/preprocess_dataset_msmd_data.py --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/msmd_data.csv --dataset-root /scratch/gilbreth/li5042/datasets/msmd_data
+[msmd_data] Wrote 467 rows -> /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/msmd_data.csv
+[msmd_data] MIDI files: 467, audio files: 467, paired: 467
+[msmd_data] Missing audio stems for MIDI: 0, ambiguous stems: 0
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/preprocess_dataset_BiMMuDa.py --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/BiMMuDa.csv --dataset-root /scratch/gilbreth/li5042/datasets/BiMMuDa
+[BiMMuDa] Wrote 375 rows -> /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/BiMMuDa.csv
+[BiMMuDa] MIDI files: 375, audio files: 375, paired: 375
+[BiMMuDa] Missing audio stems for MIDI: 0, ambiguous stems: 0
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/preprocess_dataset_POP909.py --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/POP909.csv --dataset-root /scratch/gilbreth/li5042/datasets/POP909
+[POP909] Wrote 909 rows -> /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/POP909.csv
+[POP909] MIDI files: 909, audio files: 909, paired: 909
+[POP909] Missing audio stems for MIDI: 0, ambiguous stems: 0
+Merging per-dataset CSV files into merged_train.csv...
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/merge_dataset_csvs.py --csv-dir /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/merged_train.csv
+Merging CSVs...
+  - A-MAPS: base=0 weight=1.0 merged=0
+  - MAESTRO: base=962 weight=1.0 merged=962
+  - SMD_v2: base=50 weight=1.0 merged=50
+  - msmd_data: base=467 weight=1.0 merged=467
+  - BiMMuDa: base=375 weight=1.0 merged=375
+  - POP909: base=909 weight=1.0 merged=909
+Wrote merged training CSV: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/merged_train.csv
+Total merged training rows: 2763
+Filtering CSV rows to WAV files at 44.1kHz...
+Train CSV filter stats: input=2763 kept=2763 non_wav=0 missing=0 wrong_rate=0
+MAESTRO CSV filter stats: input=1276 kept=0 non_wav=0 missing=1276 wrong_rate=0
+Loading filtered CSV metadata with Data.createDatasetMaestroCSV...
+Parsing train metadata in parallel: rows=2763 chunks=6 workers=6
+{'split': 'train', 'midi_filename': 'msmd_data/SchumannR__O68__schumann-op68-05-petite-piece/SchumannR__O68__schumann-op68-05-petite-piece.mid', 'audio_filename': 'msmd_data/SchumannR__O68__schumann-op68-05-petite-piece/SchumannR__O68__schumann-op68-05-petite-piece.wav'}
+{'split': 'train', 'midi_filename': 'POP909/202/202.mid', 'audio_filename': 'POP909/202/202.wav'}{'split': 'train', 'midi_filename': 'POP909/763/763.mid', 'audio_filename': 'POP909/763/763.wav'}
+
+{'split': 'train', 'midi_filename': 'POP909/815/815.mid', 'audio_filename': 'POP909/815/815.wav'}
+{'split': 'train', 'midi_filename': 'MAESTRO/2018/MIDI-Unprocessed_Chamber5_MID--AUDIO_18_R3_2018_wav--1.midi', 'audio_filename': 'MAESTRO/2018/MIDI-Unprocessed_Chamber5_MID--AUDIO_18_R3_2018_wav--1.wav'}
+{'split': 'train', 'midi_filename': 'POP909/242/242.mid', 'audio_filename': 'POP909/242/242.wav'}
+{'split': 'train', 'midi_filename': 'POP909/281/281.mid', 'audio_filename': 'POP909/281/281.wav'}

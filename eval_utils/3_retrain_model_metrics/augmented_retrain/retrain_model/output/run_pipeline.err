@@ -1,0 +1,73 @@
+
+The following have been reloaded with a version change:
+  1) cuda/12.6.0 => cuda/13.1.0
+
+Using metadata directory: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA
+Validating train pickle: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/train.pickle
+Loaded train pickle with 1387 samples
+Validated train pickle: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/train.pickle (n=1387)
+Validating val pickle: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/val.pickle
+Loaded val pickle with 137 samples
+Validated val pickle: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/val.pickle (n=137)
+Validating test pickle: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/test.pickle
+Loaded test pickle with 177 samples
+Validated test pickle: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/test.pickle (n=177)
+Validated model conf: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/transkun_base.json
+Using metadata directory: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA
+Using n-process: 1
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python -m transkun.train --nProcess 1 --datasetPath /scratch/gilbreth/li5042/datasets --datasetMetaFile_train /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/train.pickle --datasetMetaFile_val /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/val.pickle --modelConf /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/transkun_base.json --nIter 180000 --batchSize 4 --dataLoaderWorkers 8 --max_lr 0.0002 --weight_decay 0.0001 /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/checkpoints/checkpoint_augmented.pt
+2026-04-08 10:20:43.930033: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE4.1 SSE4.2 AVX AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+/scratch/gilbreth/li5042/transkun/transkun_fork/transkun/Data.py:383: WavFileWarning: Chunk (non-data) not understood, skipping it.
+  fs, data = wavfile.read(audioPath, mmap = True)
+/scratch/gilbreth/li5042/transkun/transkun_fork/transkun/Data.py:383: WavFileWarning: Chunk (non-data) not understood, skipping it.
+  fs, data = wavfile.read(audioPath, mmap = True)
+/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/site-packages/torch/_dynamo/eval_frame.py:1263: UserWarning: torch.utils.checkpoint: the use_reentrant parameter should be passed explicitly. Starting in PyTorch 2.9, calling checkpoint without use_reentrant will raise an exception. use_reentrant=False is recommended, but if you need to preserve the current default behavior, you can pass use_reentrant=True. Refer to docs for more details on the differences between the two variants.
+  return fn(*args, **kwargs)
+/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/site-packages/torch/utils/checkpoint.py:232: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  check_backward_validity(args)
+/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/site-packages/torch_optimizer/adabelief.py:218: UserWarning: This overload of add_ is deprecated:
+	add_(Number alpha, Tensor other)
+Consider using one of the following signatures instead:
+	add_(Tensor other, *, Number alpha = 1) (Triggered internally at /pytorch/torch/csrc/utils/python_arg_parser.cpp:1853.)
+  p.data.add_(-group['lr'], exp_avg)
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/scratch/gilbreth/li5042/transkun/transkun_fork/transkun/train.py", line 401, in <module>
+    train(0, 1, saved_filename, runSeed, args)
+  File "/scratch/gilbreth/li5042/transkun/transkun_fork/transkun/train.py", line 134, in train
+    for idx, batch in enumerate(dataloader):
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 741, in __next__
+    data = self._next_data()
+           ^^^^^^^^^^^^^^^^^
+  File "/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1548, in _next_data
+    return self._process_data(data, worker_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1586, in _process_data
+    data.reraise()
+  File "/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/site-packages/torch/_utils.py", line 785, in reraise
+    raise exception
+RuntimeError: Caught RuntimeError in DataLoader worker process 7.
+Original Traceback (most recent call last):
+  File "/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/site-packages/torch/utils/data/_utils/worker.py", line 358, in _worker_loop
+    data = fetcher.fetch(index)  # type: ignore[possibly-undefined]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/site-packages/torch/utils/data/_utils/fetch.py", line 57, in fetch
+    return self.collate_fn(data)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/gilbreth/li5042/transkun/transkun_fork/transkun/Data.py", line 943, in collate_fn_batching
+    audioSlices = torch.stack(
+                  ^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [705600, 2] at entry 0 and [705600, 1] at entry 1
+
+Traceback (most recent call last):
+  File "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/retrain_model/train_from_artifacts.py", line 153, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/retrain_model/train_from_artifacts.py", line 148, in main
+    subprocess.run(cmd, cwd=str(repo_root), check=True)
+  File "/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python', '-m', 'transkun.train', '--nProcess', '1', '--datasetPath', '/scratch/gilbreth/li5042/datasets', '--datasetMetaFile_train', '/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/train.pickle', '--datasetMetaFile_val', '/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/val.pickle', '--modelConf', '/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/transkun_base.json', '--nIter', '180000', '--batchSize', '4', '--dataLoaderWorkers', '8', '--max_lr', '0.0002', '--weight_decay', '0.0001', '/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/checkpoints/checkpoint_augmented.pt']' returned non-zero exit status 1.

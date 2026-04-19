@@ -1,0 +1,26 @@
+Using metadata directory: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA
+Using n-process: 1
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python -m transkun.train --nProcess 1 --datasetPath /scratch/gilbreth/li5042/datasets --datasetMetaFile_train /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/train.pickle --datasetMetaFile_val /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/val.pickle --modelConf /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/transkun_base.json --nIter 180000 --batchSize 4 --dataLoaderWorkers 8 --max_lr 0.0002 --weight_decay 0.0001 /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/checkpoints/checkpoint_augmented.pt
+initializing the model...
+#0 loaded
+loading dataset....
+loading the annotation file...
+n: 1387  totalDuration:  667024.2629705216  elapsed: 7.849264860153198
+creating index for notes in all pieces...
+elapsed: 2.4802727699279785
+loading the annotation file...
+n: 137  totalDuration:  70190.26616780045  elapsed: 1.4123499393463135
+creating index for notes in all pieces...
+elapsed: 0.24072575569152832
+#0 loaded
+epoch:0 progress:0.000 step:0  loss:6078.9121 gradNorm:662.61 clipValue:40.00 time:86.26 
+nGT:610.0001 nEst:497160.0001 nCorrect:107.0001
+f1:0.00042991783336484006 precision:0.00021522266469240834 recall:0.17540997124426702
+f1Frame:0.10850473397824982 precisionFrame:0.057364528438107194 recallFrame:1.0
+mseVelocity:710.6850269368808 mseOF:0.15521751735916084
+epoch:0 progress:0.000 step:0  loss:6088.4385 gradNorm:662.69 clipValue:538.08 time:0.69 
+epoch:0 progress:0.000 step:0  loss:6085.7832 gradNorm:662.37 clipValue:662.65 time:0.48 
+epoch:0 progress:0.000 step:0  loss:6070.0234 gradNorm:661.98 clipValue:662.64 time:0.48 
+epoch:0 progress:0.000 step:0  loss:6098.6348 gradNorm:661.29 clipValue:662.62 time:0.58 
+epoch:0 progress:0.000 step:0  loss:6065.9141 gradNorm:660.98 clipValue:662.61 time:0.48 
+epoch:0 progress:0.000 step:0  loss:6051.1240 gradNorm:661.14 clipValue:662.56 time:0.48 

@@ -1,0 +1,11 @@
+Using metadata directory: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA
+Validating train pickle: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/train.pickle
+Loaded train pickle with 1387 samples
+Validated train pickle: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/train.pickle (n=1387)
+Validating val pickle: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/val.pickle
+Loaded val pickle with 137 samples
+Validated val pickle: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/val.pickle (n=137)
+Validating test pickle: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/test.pickle
+Loaded test pickle with 177 samples
+Validated test pickle: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/test.pickle (n=177)
+Validated model conf: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_METADATA/transkun_base.json

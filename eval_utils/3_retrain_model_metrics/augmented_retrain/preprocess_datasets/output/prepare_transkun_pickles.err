@@ -1,0 +1,49 @@
+Generating per-dataset CSV files...
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/preprocess_dataset_A-MAPS.py --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/A-MAPS.csv --dataset-root /scratch/gilbreth/li5042/datasets/A-MAPS
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/preprocess_dataset_MAESTRO.py --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/MAESTRO.csv --maestro-csv /scratch/gilbreth/li5042/datasets/MAESTRO/maestro-v3.0.0.csv
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/preprocess_dataset_SMD_v2.py --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/SMD_v2.csv --dataset-root /scratch/gilbreth/li5042/datasets/SMD_v2
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/preprocess_dataset_msmd_data.py --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/msmd_data.csv --dataset-root /scratch/gilbreth/li5042/datasets/msmd_data
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/preprocess_dataset_BiMMuDa.py --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/BiMMuDa.csv --dataset-root /scratch/gilbreth/li5042/datasets/BiMMuDa
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/preprocess_dataset_POP909.py --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/POP909.csv --dataset-root /scratch/gilbreth/li5042/datasets/POP909
+Merging per-dataset CSV files into merged_train.csv...
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/merge_dataset_csvs.py --csv-dir /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs --output-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs/merged_train.csv
+Filtering CSV rows to WAV files at 44.1kHz...
+Train CSV filter stats: input=2763 kept=2763 non_wav=0 missing=0 wrong_rate=0
+MAESTRO CSV filter stats: input=1276 kept=0 non_wav=0 missing=1276 wrong_rate=0
+Loading filtered CSV metadata with Data.createDatasetMaestroCSV...
+Parsing train metadata in parallel: rows=2763 chunks=6 workers=6
+/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/site-packages/pretty_midi/pretty_midi.py:122: RuntimeWarning: Tempo, Key or Time signature change events found on non-zero tracks.  This is not a valid type 0 or type 1 MIDI file.  Tempo, Key or Time Signature may be wrong.
+  warnings.warn(
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/concurrent/futures/process.py", line 264, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/prepare_transkun_pickles.py", line 183, in _process_chunk
+    samples = Data.createDatasetMaestroCSV(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/gilbreth/li5042/transkun/transkun_fork/transkun/Data.py", line 357, in createDatasetMaestroCSV
+    assert(len(midiFile.instruments) == 1)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/prepare_transkun_pickles.py", line 405, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/prepare_transkun_pickles.py", line 365, in main
+    train_samples = create_samples_parallel(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/prepare_transkun_pickles.py", line 248, in create_samples_parallel
+    idx, out_path, in_rows, out_rows = future.result()
+                                       ^^^^^^^^^^^^^^^
+  File "/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+AssertionError

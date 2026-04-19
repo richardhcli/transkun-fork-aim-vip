@@ -1,0 +1,26 @@
+[prologue.sh] Starting /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/5_whole_pipeline/main.sh at 2026-04-14 09:11:09 at START_TIME 1776172269
+Computing comparison metrics against ground truth...
+Predictions directory: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/5_whole_pipeline/output/metrics/full_eval_1776146937
+[INFO] Starting 'compute_comparison_metrics.py' ...
+[INFO] Output dir : /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/5_whole_pipeline/output/metrics/full_eval_1776146937
+[INFO] Error log  : /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/5_whole_pipeline/output/metrics/full_eval_1776146937/metric_failures.log
+[INFO] Dataset total: 177 files.
+[INFO] Cached previously: 0 files.
+[INFO] Launching evaluation pool for 177 remaining files...
+[INFO] Processing complete. 0 files failed during evaluation.
+
+==================================================
+HOLISTIC MAESTRO EVALUATION RESULTS (AVERAGES)
+==================================================
+Activation                 | P: 0.9548 | R: 0.9357 | F1: 0.9447
+Note Onset                 | P: 0.9878 | R: 0.9705 | F1: 0.9790
+Note Onset+Offset          | P: 0.9273 | R: 0.9112 | F1: 0.9191
+Note Onset+Offset+Velocity | P: 0.9185 | R: 0.9026 | F1: 0.9104
+Pedal Activation           | P: 0.9480 | R: 0.9308 | F1: 0.9378
+Pedal Onset                | P: 0.8438 | R: 0.8128 | F1: 0.8267
+Pedal Onset+Offset         | P: 0.8138 | R: 0.7837 | F1: 0.7973
+--------------------------------------------------
+Total Successfully Evaluated : 177
+==================================================
+Metrics calculation finished with code 0
+[epilogue] /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/5_whole_pipeline/main.sh completed at 2026-04-14 09:15:23 AM in 00h:04m:14s seconds

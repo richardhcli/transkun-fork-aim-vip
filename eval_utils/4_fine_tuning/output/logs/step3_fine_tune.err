@@ -1,0 +1,44 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1775985701.358547 2176740 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE4.1 SSE4.2 AVX AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/scratch/gilbreth/li5042/transkun/transkun_fork/transkun/train.py", line 401, in <module>
+    train(0, 1, saved_filename, runSeed, args)
+  File "/scratch/gilbreth/li5042/transkun/transkun_fork/transkun/train.py", line 134, in train
+    for idx, batch in enumerate(dataloader):
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 741, in __next__
+    data = self._next_data()
+           ^^^^^^^^^^^^^^^^^
+  File "/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1548, in _next_data
+    return self._process_data(data, worker_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1586, in _process_data
+    data.reraise()
+  File "/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/site-packages/torch/_utils.py", line 785, in reraise
+    raise exception
+RuntimeError: Caught RuntimeError in DataLoader worker process 0.
+Original Traceback (most recent call last):
+  File "/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/site-packages/torch/utils/data/_utils/worker.py", line 358, in _worker_loop
+    data = fetcher.fetch(index)  # type: ignore[possibly-undefined]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/site-packages/torch/utils/data/_utils/fetch.py", line 57, in fetch
+    return self.collate_fn(data)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/gilbreth/li5042/transkun/transkun_fork/transkun/Data.py", line 943, in collate_fn_batching
+    audioSlices = torch.stack(
+                  ^^^^^^^^^^^^
+RuntimeError: stack expects each tensor to be equal size, but got [705600, 1] at entry 0 and [705600, 2] at entry 1
+
+Traceback (most recent call last):
+  File "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/fine_tune.py", line 399, in <module>
+    main()
+  File "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/fine_tune.py", line 351, in main
+    run_command(train_cmd, cwd=project_root, env=env, dry_run=args.dry_run)
+  File "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/fine_tune.py", line 115, in run_command
+    subprocess.run(cmd, cwd=str(cwd), env=env, check=True)
+  File "/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python', '-m', 'transkun.train', '--nProcess', '1', '--datasetPath', '/scratch/gilbreth/li5042/datasets', '--datasetMetaFile_train', '/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/model_info/training_data/train.pickle', '--datasetMetaFile_val', '/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/model_info/training_data/val.pickle', '--batchSize', '4', '--dataLoaderWorkers', '8', '--max_lr', '0.0001', '--weight_decay', '0.0001', '--nIter', '50000', '--modelConf', '/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/output/finetune_v2_run/model_finetune.conf', '/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/output/finetune_v2_run/checkpoint_finetuned.pt']' returned non-zero exit status 1.

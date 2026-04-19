@@ -1,14 +1,18 @@
 
 # transcribed output files. This is too large. 
-output/
+#output/
+#files that are too large: 
+
+*.pt
+*.pickle
+#ignore test transcription midi files. 
+*.mid
+*.midi
 
 
 # ==============================================================================
 # Python.gitignore
 # ==============================================================================
-
-*.pt
-*.pickle
 
 #pickle files are too large.
 # Byte-compiled / optimized / DLL files

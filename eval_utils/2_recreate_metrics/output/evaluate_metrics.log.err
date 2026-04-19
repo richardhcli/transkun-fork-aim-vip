@@ -1,0 +1,9 @@
+/var/spool/slurm/job10519083/slurm_script: line 31: transkun/transkun_fork/eval_utils/environment_setup/setup_environment.sh: No such file or directory
+Traceback (most recent call last):
+  File "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/2_recreate_metrics/transcribe_maestro_test.py", line 11, in <module>
+    import torch
+ModuleNotFoundError: No module named 'torch'
+Traceback (most recent call last):
+  File "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/2_recreate_metrics/compute_comparison_metrics.py", line 17, in <module>
+    import pretty_midi
+ModuleNotFoundError: No module named 'pretty_midi'

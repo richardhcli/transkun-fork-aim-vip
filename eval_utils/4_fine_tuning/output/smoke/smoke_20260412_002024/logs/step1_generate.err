@@ -1,0 +1,21 @@
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/prepare_transkun_pickles.py --dataset-root /scratch/gilbreth/li5042/datasets --csv-dir /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/preprocess_datasets/CSVs --output-dir /tmp/finetune_pickles_raw_gx81qufc/raw --workers 1 --rows-per-chunk 1 --train-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/output/smoke/smoke_20260412_002024/csv/smoke_train.csv --maestro-csv /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/output/smoke/smoke_20260412_002024/csv/smoke_maestro.csv --skip-preprocess --skip-merge
+Filtering CSV rows to WAV files at 44.1kHz...
+Train CSV filter stats: input=1 kept=1 non_wav=0 missing=0 wrong_rate=0
+MAESTRO CSV filter stats: input=0 kept=0 non_wav=0 missing=0 wrong_rate=0
+Loading filtered CSV metadata with Data.createDatasetMaestroCSV...
+No rows for maestro; skipping parsing.
+Wrote maestro-like JSON -> /tmp/finetune_pickles_raw_gx81qufc/raw/augmented_maestro_like.json
+Re-loading maestro-like JSON with Data.createDatasetMaestro...
+Wrote 1 samples -> /tmp/finetune_pickles_raw_gx81qufc/raw/train.pickle
+Wrote 0 samples -> /tmp/finetune_pickles_raw_gx81qufc/raw/val.pickle
+Wrote 0 samples -> /tmp/finetune_pickles_raw_gx81qufc/raw/test.pickle
+Wrote model conf -> /tmp/finetune_pickles_raw_gx81qufc/raw/transkun_base.json
+Running: /scratch/gilbreth/li5042/.conda/envs/transkun_aim/bin/python /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/preprocessing.py --input-dir /tmp/finetune_pickles_raw_gx81qufc/raw --output-dir /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/output/smoke/smoke_20260412_002024/model_info/training_data --dataset-root /scratch/gilbreth/li5042/datasets
+Skipping model params copy (--skip-model-params-copy). Using: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/output/smoke/smoke_20260412_002024/model_info/model_params
+Generated train.pickle samples=1
+Generated val.pickle samples=0
+WARN: val.pickle is empty
+Generated test.pickle samples=0
+WARN: test.pickle is empty
+Metadata generated in: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/output/smoke/smoke_20260412_002024/model_info/training_data
+Model params prepared in: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/output/smoke/smoke_20260412_002024/model_info/model_params

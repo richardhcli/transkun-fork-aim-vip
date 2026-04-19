@@ -1,0 +1,14 @@
+[prologue.sh] Starting /main.sh at 2026-04-13 17:18:45 at START_TIME 1776115125
+Starting one-time dataset WAV flattening...
+Granting read and write permissions to datasets directory...
+Reverting permissions on datasets directory (removing write access)...
+Flattening process finished with code 0
+Running quick summary over the JSON log outputs...
+=== Flatten Summary ===
+Total checked: 3447
+Modified: 1327
+Skipped (already mono): 2120
+Errors: 0
+
+Testing validation complete.
+[epilogue] /main.sh completed at 2026-04-13 05:55:25 PM in 00h:36m:40s seconds

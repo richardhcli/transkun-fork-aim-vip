@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/retrain_model/train_from_artifacts.py", line 109, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/augmented_retrain/retrain_model/train_from_artifacts.py", line 56, in main
+    raise FileNotFoundError(f"Required artifact missing: {p}")
+FileNotFoundError: Required artifact missing: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/3_retrain_model_metrics/output/AUGMENTED_PIPELINE/metadata/train.pickle

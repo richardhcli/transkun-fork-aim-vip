@@ -1,0 +1,9 @@
+
+The following have been reloaded with a version change:
+  1) cuda/12.6.0 => cuda/13.1.0
+
+Using metadata directory: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/model_info/training_data
+Using model params directory: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/model_info/model_params
+[2026-04-12T03:00:27.003] error: *** JOB 10546028 ON gilbreth-k026 CANCELLED AT 2026-04-12T03:00:27 DUE TO TIME LIMIT ***
+[2026-04-12T03:04:38.000] error: *** JOB 10546028 STEPD TERMINATED ON gilbreth-k026 AT 2026-04-12T03:04:37 DUE TO JOB NOT ENDING WITH SIGNALS ***
+[2026-04-12T03:04:42.027] error: Container 1079921 in cgroup plugin has 2 processes, giving up after 255 sec

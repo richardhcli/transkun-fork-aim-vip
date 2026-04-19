@@ -1,0 +1,8 @@
+Using metadata directory: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/model_info/training_data
+Using model params directory: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/model_info/model_params
+Validated train.pickle: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/model_info/training_data/train.pickle (samples=2349)
+Validated val.pickle: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/model_info/training_data/val.pickle (samples=137)
+Validated test.pickle: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/model_info/training_data/test.pickle (samples=177)
+Validated model conf: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/model_info/training_data/transkun_base.json
+Validated model params: /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/model_info/model_params/checkpoint.pt and /scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/4_fine_tuning/model_info/model_params/model.conf
+All fine-tuning artifacts validated successfully.
