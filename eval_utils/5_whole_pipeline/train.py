@@ -111,7 +111,6 @@ DEFAULT_CHECKPOINT_OUT = env_path(
 
 def log(message: str) -> None:
     print(message, flush=True)
-    print(message, file=sys.stderr, flush=True)
 
 
 def run_training_with_timeout(
@@ -120,42 +119,68 @@ def run_training_with_timeout(
     cwd: Path,
     env: dict[str, str],
     timeout_seconds: float,
+    stdout_log_path: Path,
+    stderr_log_path: Path,
 ) -> tuple[int, bool]:
     """Run command and force-stop process group when timeout is reached."""
-    if timeout_seconds <= 0:
-        completed = subprocess.run(cmd, cwd=str(cwd), env=env, check=False)
-        return completed.returncode, False
-
-    process = subprocess.Popen(
-        cmd,
-        cwd=str(cwd),
-        env=env,
-        start_new_session=True,
+    stdout_log_path.parent.mkdir(parents=True, exist_ok=True)
+    stderr_log_path.parent.mkdir(parents=True, exist_ok=True)
+    run_header = (
+        "\n===== transkun.train started at "
+        f"{time.strftime('%Y-%m-%d %H:%M:%S')} =====\n"
     )
 
-    try:
-        return process.wait(timeout=timeout_seconds), False
-    except subprocess.TimeoutExpired:
-        log(
-            "[train.py] Time limit reached "
-            f"({timeout_seconds:.2f}s). Stopping transkun.train process group."
+    with stdout_log_path.open("w", encoding="utf-8") as stdout_log, stderr_log_path.open(
+        "w", encoding="utf-8"
+    ) as stderr_log:
+        stdout_log.write(run_header)
+        stderr_log.write(run_header)
+        stdout_log.flush()
+        stderr_log.flush()
+
+        if timeout_seconds <= 0:
+            completed = subprocess.run(
+                cmd,
+                cwd=str(cwd),
+                env=env,
+                stdout=stdout_log,
+                stderr=stderr_log,
+                check=False,
+            )
+            return completed.returncode, False
+
+        process = subprocess.Popen(
+            cmd,
+            cwd=str(cwd),
+            env=env,
+            stdout=stdout_log,
+            stderr=stderr_log,
+            start_new_session=True,
         )
 
         try:
-            os.killpg(process.pid, signal.SIGTERM)
-        except ProcessLookupError:
-            pass
-
-        try:
-            process.wait(timeout=20)
+            return process.wait(timeout=timeout_seconds), False
         except subprocess.TimeoutExpired:
+            log(
+                "[train.py] Time limit reached "
+                f"({timeout_seconds:.2f}s). Stopping transkun.train process group."
+            )
+
             try:
-                os.killpg(process.pid, signal.SIGKILL)
+                os.killpg(process.pid, signal.SIGTERM)
             except ProcessLookupError:
                 pass
-            process.wait()
 
-        return 0, True
+            try:
+                process.wait(timeout=20)
+            except subprocess.TimeoutExpired:
+                try:
+                    os.killpg(process.pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+                process.wait()
+
+            return 0, True
 
 
 def detect_n_process() -> int:
@@ -383,6 +408,10 @@ def main() -> int:
     log(f"Using model conf: {model_conf_effective}")
     log(f"Using checkpoint path: {checkpoint_effective}")
     log(f"Using nProcess: {n_process}")
+    train_stdout_path = checkpoint_effective.parent / "train.out"
+    train_stderr_path = checkpoint_effective.parent / "train.err"
+    log(f"Training stdout log file: {train_stdout_path}")
+    log(f"Training stderr log file: {train_stderr_path}")
     log("Running command:")
     log(shlex.join(cmd))
 
@@ -395,6 +424,8 @@ def main() -> int:
         cwd=repo_root,
         env=env,
         timeout_seconds=max(0.0, args.max_train_seconds),
+        stdout_log_path=train_stdout_path,
+        stderr_log_path=train_stderr_path,
     )
 
     if timed_out:

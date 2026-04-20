@@ -1,0 +1,14 @@
+
+===== transkun.train started at 2026-04-20 17:16:59 =====
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1776719882.562734 2000749 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE4.1 SSE4.2 AVX AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/site-packages/torch_optimizer/adabelief.py:218: UserWarning: This overload of add_ is deprecated:
+	add_(Number alpha, Tensor other)
+Consider using one of the following signatures instead:
+	add_(Tensor other, *, Number alpha = 1) (Triggered internally at /pytorch/torch/csrc/utils/python_arg_parser.cpp:1853.)
+  p.data.add_(-group['lr'], exp_avg)
+/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/site-packages/mir_eval/transcription.py:163: UserWarning: Estimated notes are empty.
+  warnings.warn("Estimated notes are empty.")
+/scratch/gilbreth/li5042/.conda/envs/transkun_aim/lib/python3.12/site-packages/mir_eval/transcription.py:163: UserWarning: Estimated notes are empty.
+  warnings.warn("Estimated notes are empty.")

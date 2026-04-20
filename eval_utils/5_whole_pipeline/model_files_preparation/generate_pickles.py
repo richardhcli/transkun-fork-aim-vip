@@ -92,7 +92,6 @@ DEFAULT_OUTPUT_DIR = env_path(
 
 def log(message: str) -> None:
     print(message, flush=True)
-    print(message, file=sys.stderr, flush=True)
 
 
 def normalize_path(value: str) -> str:

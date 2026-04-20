@@ -217,8 +217,8 @@ def computeMetrics(model, x, notes):
 
         # Empty estimate/reference notes can happen early in training and are expected.
         with warnings.catch_warnings():
-            warnings.filterwarnings("ignore", message=r"Estimated notes are empty\\.")
-            warnings.filterwarnings("ignore", message=r"Reference notes are empty\\.")
+            warnings.filterwarnings("ignore", message=r"Estimated notes are empty\.")
+            warnings.filterwarnings("ignore", message=r"Reference notes are empty\.")
             stats = model.computeStatsMIREVAL(x, notes)
 
     

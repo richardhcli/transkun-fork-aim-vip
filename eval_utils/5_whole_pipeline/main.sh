@@ -5,7 +5,7 @@
 #SBATCH --ntasks=1 --cpus-per-task=32
 #SBATCH --nodes=1 --gpus-per-node=1
 #SBATCH --mem=64G
-#SBATCH --time=2-00:00:00
+#SBATCH --time=01:00:00
 #SBATCH --job-name transkun_finetune_verify
 #SBATCH --output=/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/5_whole_pipeline/output/main.sh.out
 #SBATCH --error=/scratch/gilbreth/li5042/transkun/transkun_fork/eval_utils/5_whole_pipeline/output/main.sh.err
@@ -52,7 +52,7 @@ export DATASET_ROOT
 # "user"
 # "full"
 # "all" 
-MODE="full"
+MODE="smoke"
 export MODE
 #====================================================================================================================================
 

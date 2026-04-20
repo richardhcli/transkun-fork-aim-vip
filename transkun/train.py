@@ -337,6 +337,7 @@ def train(workerId, nWorker, filename, runSeed, args):
             lossAveraged = sum(lossAll)/len(lossAll)
             lossAll = []
             lossTracker['train'].append(lossAveraged)
+            prev_best_f1 = max(lossTracker['val']) if lossTracker['val'] else float("-inf")
             lossTracker['val'].append(f1)
 
             print('result:', valResult)
@@ -344,7 +345,7 @@ def train(workerId, nWorker, filename, runSeed, args):
             for key in valResult:
                 writer.add_scalar('val/'+ key, valResult[key], epoc)
 
-            if f1 >= max(lossTracker['val'])*1.00:
+            if f1 >= prev_best_f1:
                 print('best updated')
                 best_state_dict = copy.deepcopy(model.state_dict())
 

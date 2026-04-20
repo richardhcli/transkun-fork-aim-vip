@@ -568,8 +568,16 @@ class Backbone(nn.Module):
 
 
     def forward(self, x, outputIndices):
-        if self.useGradientCheckpoint or self.training:
-            checkpoint = torch.utils.checkpoint.checkpoint
+        use_gradient_checkpoint = (
+            self.useGradientCheckpoint and self.training and torch.is_grad_enabled()
+        )
+        if use_gradient_checkpoint:
+            def checkpoint(function, *inputs):
+                return torch.utils.checkpoint.checkpoint(
+                    function,
+                    *inputs,
+                    use_reentrant=False,
+                )
         else:
             checkpoint = checkpointByPass
         # x: [N, T, F, D]
